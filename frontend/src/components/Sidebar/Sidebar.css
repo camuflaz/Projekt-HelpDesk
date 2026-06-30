@@ -1,0 +1,136 @@
+.sidebar {
+    height: 96vh;
+    background: #125569d0;
+    position: sticky;
+    top: 20px; /* Dobra praktyka przy position: sticky, stabilizuje pion */
+
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+    color: white;
+
+    transition: width 0.3s ease-in-out;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.sidebar.open {
+    width: 250px;
+}
+
+.sidebar.closed {
+    width: 85px;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 25px;
+    border-bottom: 1px solid white;
+    height: 75px; /* Sztywna wysokość dla loga zapobiega skokom w pionie */
+    box-sizing: border-box;
+}
+
+.logo-icon-box {
+    display: grid;
+    min-width: 35px;
+    height: 35px;
+    place-content: center;
+    background: #a574f5ee;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    white-space: nowrap;
+    /* Wyrównanie linii bazowej tekstu - mogło powodować skoki */
+    line-height: 1; 
+}
+
+.menu-icon {
+    width: 25px;
+    height: 25px;
+    flex-shrink: 0;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 10px;
+    padding: 0 5px;
+}
+
+.menu-item {
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 55px; /* Rownież stała wysokość dla nav itemów żeby sie nie ruszały */
+    padding: 0 25px;
+    gap: 20px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    box-sizing:border-box;
+    border-radius: 10px;
+    
+}
+
+.menu-text {
+    font-size: 16px;
+    /* Stabilizuje tekst w jednej linii z ikoną bez przesunięć */
+    line-height: 1; 
+}
+
+.menu-item:hover {
+    background: #75b8f0a1;
+}
+
+.menu-item.active {
+    background: #2498f7;
+}
+
+.toggle-btn {
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    height: 55px;
+    padding: 0 25px;
+    gap: 20px;
+    transition: background 0.2s;
+    white-space: nowrap;
+    border-radius: 10px;
+}
+
+.toggle-btn:hover {
+    background: #75b8f0a1;
+}
+
+.arrow-icon {
+    transition: transform 0.3s ease-in-out;
+}
+
+.arrow-icon.rotate {
+    transform: rotate(180deg);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+    padding: 0 5px;
+}
