@@ -16,7 +16,7 @@ services:
 
   backend:
     build:
-      context: ./backend
+      context: ./backend-publish
       dockerfile: Dockerfile
     container_name: backend
     ports:
