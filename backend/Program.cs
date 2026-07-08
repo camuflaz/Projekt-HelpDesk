@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using backend.Data;
 using backend.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +26,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 builder.Services
 .AddAuthentication(

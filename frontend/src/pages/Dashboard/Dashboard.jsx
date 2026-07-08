@@ -1,10 +1,23 @@
 import { useEffect } from "react";
+import "./Dashboard.css";
+import TicketForm from "../../components/TicketForm/TicketForm";
+
 function Dashboard() {
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <p>Witaj na swoim dashboardzie! Tutaj znajdziesz podsumowanie swoich zgłoszeń, 
-                aktualności i szybki dostęp do tworzenia nowych zgłoszeń.</p>
+        <div className="dashboard">
+            <div className="dashboard-left">
+                <TicketForm />
+            </div>
+
+            <div className="dashboard-right">
+                <div className="dashboard-box-upper">
+                    <h2>Aktywne zgłoszenia</h2>
+                </div>
+
+                <div className="dashboard-box-lower">
+                    <h2>Zamknięte zgłoszenia</h2>
+                </div>
+            </div>
         </div>
      );
 }

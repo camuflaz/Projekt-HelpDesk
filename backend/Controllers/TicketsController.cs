@@ -1,37 +1,55 @@
 using Microsoft.AspNetCore.Mvc;
 using backend.Models;
+using backend.Services;
+using backend.DTOs;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backend.Controllers;
 
+
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class TicketsController : ControllerBase
 {
-    private readonly static List<Tickets> Tickets = new();
+    private readonly ITicketService _ticketService;
 
-    [HttpGet]
-    public ActionResult<List<Tickets>> GetAll()
+    public TicketsController(ITicketService ticketService)
     {
-        return Ok(Tickets);
+        _ticketService = ticketService;
+    }
+
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateTicket( CreateTicketDto dto)
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if (userIdClaim == null)
+        {
+            return Unauthorized();
+        }
+
+        int userId = int.Parse(userIdClaim.Value);
+
+        if (_ticketService == null)
+        {
+            return StatusCode(500);
+        }
+
+        var ticket = await _ticketService.CreateTicketAsync(dto, userId);
+
+        return CreatedAtAction(
+            nameof(GetTicketById),
+            new { id = ticket.Id },
+            ticket
+        );
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Tickets> GetById(int id)
+    public async Task<IActionResult> GetTicketById(int id)
     {
-        var ticket = Tickets.FirstOrDefault(t => t.Id == id);
-        if (ticket == null)
-        {
-            return NotFound();
-        }
-        return Ok(ticket);
-    }
-
-    [HttpPost]
-    public ActionResult<Tickets> Create(Tickets ticket)
-    {
-        ticket.Id = Tickets.Count + 1;
-        Tickets.Add(ticket);
-        return CreatedAtAction(nameof(GetById), new { id = ticket.Id }, ticket);
+        return Ok();
     }
     
 }
