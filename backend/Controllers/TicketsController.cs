@@ -52,4 +52,26 @@ public class TicketsController : ControllerBase
         return Ok();
     }
     
+    [Authorize]
+    [HttpGet("my-active")]
+    public async Task<IActionResult> GetMyActiveTickets()
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var tickets = await _ticketService.GetMyActiveTickets(userId);
+
+        return Ok(tickets);
+    }
+
+    [Authorize]
+    [HttpGet("my-closed")]
+    public async Task<IActionResult> GetMyClosedTickets()
+    {
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var tickets = await _ticketService.GetMyClosedTickets(userId);
+
+        return Ok(tickets);
+    }
+
 }

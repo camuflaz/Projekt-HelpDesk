@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import "./Dashboard.css";
 import TicketForm from "../../components/TicketForm/TicketForm";
+import TicketList from "../../components/TicketList/TicketList";
 
 function Dashboard() {
     return (
@@ -11,11 +12,11 @@ function Dashboard() {
 
             <div className="dashboard-right">
                 <div className="dashboard-box-upper">
-                    <h2>Aktywne zgłoszenia</h2>
+                    <TicketList title="Aktywne zgłoszenia" endpoint="my-active"/>
                 </div>
 
                 <div className="dashboard-box-lower">
-                    <h2>Zamknięte zgłoszenia</h2>
+                    <TicketList title="Zamknięte / Rozwiązane zgłoszenia" endpoint="my-closed"/>
                 </div>
             </div>
         </div>

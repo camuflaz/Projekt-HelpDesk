@@ -1,0 +1,55 @@
+.ticket-card{
+    background: white;
+
+    border-radius: 10px;
+
+    padding: 8px;
+
+    margin-top: 12px;
+
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+
+    cursor: pointer;
+
+    transition: .06s ease-in-out;
+}
+
+.ticket-card:hover{
+    transform: translateY(-2px);
+    background: rgba(128, 128, 128, 0.082);
+}
+
+.ticket-header{
+    display: flex;
+    justify-content: space-between;
+
+    color: gray;
+
+    font-size: 12px;
+
+}
+
+.status{
+    padding: 3px 8px;
+
+    border-radius: 15px;
+
+    color: white;
+}
+
+.status.new{
+    background: #2196f3;
+}
+
+.status.in-progress{
+    background: #ff9900;
+}
+
+.status.resolved{
+    background: #4caf50;
+}
+
+.status.closed{
+    background: #f44336;
+}
+

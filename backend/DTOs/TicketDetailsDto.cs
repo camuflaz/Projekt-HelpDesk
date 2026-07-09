@@ -1,3 +1,4 @@
+namespace backend.DTOs;
 public class TicketDetailsDto
 {
     public int Id { get; set; }

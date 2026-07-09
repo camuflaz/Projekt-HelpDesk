@@ -1,3 +1,4 @@
+namespace backend.DTOs;
 public class CreateTicketDto
 {
     public string Title { get; set; } = string.Empty;

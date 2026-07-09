@@ -1,3 +1,4 @@
+namespace backend.DTOs;
 public class UpdateTicketDto
 {
     public string Status { get; set; } = string.Empty;

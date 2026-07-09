@@ -9,4 +9,8 @@ public interface ITicketService
         CreateTicketDto dto,
         int authorId
     );
+
+    Task<List<TicketListDto>> GetMyActiveTickets(int userId);
+
+    Task<List<TicketListDto>> GetMyClosedTickets(int userId);
 }
