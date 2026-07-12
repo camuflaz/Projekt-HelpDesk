@@ -40,17 +40,12 @@ public class TicketsController : ControllerBase
         var ticket = await _ticketService.CreateTicketAsync(dto, userId);
 
         return CreatedAtAction(
-            nameof(GetTicketById),
+            nameof(GetTicket),
             new { id = ticket.Id },
             ticket
         );
     }
 
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetTicketById(int id)
-    {
-        return Ok();
-    }
     
     [Authorize]
     [HttpGet("my-active")]
@@ -72,6 +67,31 @@ public class TicketsController : ControllerBase
         var tickets = await _ticketService.GetMyClosedTickets(userId);
 
         return Ok(tickets);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetTicket(int id)
+    {
+        int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var ticket = await _ticketService.GetTicketDetailsAsync(id, userId);
+
+        if (ticket == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(ticket);
+    }
+
+    [HttpPost("{id}/comments")]
+    public async Task<IActionResult> AddComment(int id, AddCommentDto dto)
+    {
+        int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        await _ticketService.AddCommentAsync(id, userId, dto);
+
+        return Ok();
     }
 
 }

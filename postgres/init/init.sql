@@ -27,3 +27,19 @@ CREATE TABLE "Tickets"(
     "AssignedAdminId" INT
 );
 
+CREATE TABLE "TicketComments" (
+    "Id" SERIAL PRIMARY KEY,
+    "Message" TEXT NOT NULL,
+    "CreatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    "TicketId" INT NOT NULL,
+    "UserId" INT NOT NULL,
+
+    CONSTRAINT "FK_TicketComments_Tickets_TicketId" FOREIGN KEY ("TicketId") 
+        REFERENCES "Tickets" ("Id") ON DELETE CASCADE,
+        
+    CONSTRAINT "FK_TicketComments_Users_UserId" FOREIGN KEY ("UserId") 
+        REFERENCES "Users" ("Id") ON DELETE CASCADE
+);
+
+CREATE INDEX "IX_TicketComments_TicketId" ON "TicketComments" ("TicketId");
+CREATE INDEX "IX_TicketComments_UserId" ON "TicketComments" ("UserId");

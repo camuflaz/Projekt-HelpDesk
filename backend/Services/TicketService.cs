@@ -59,7 +59,7 @@ public class TicketService : ITicketService
     public async Task<List<TicketListDto>> GetMyClosedTickets(int userId)
     {
         return await _context.Tickets
-            .Where(t => t.AuthorId == userId && t.Status == "closed" | t.Status == "resolved")
+            .Where(t => t.AuthorId == userId && (t.Status == "closed" || t.Status == "resolved"))
             .OrderByDescending(t => t.CreatedAt)
             .Take(3)
             .Select(t=> new TicketListDto
@@ -72,4 +72,68 @@ public class TicketService : ITicketService
             })
             .ToListAsync();
     }
+
+
+    public async Task<TicketDetailsDto?> GetTicketDetailsAsync(
+        int ticketId,
+        int userId)
+    {
+        var ticket = await _context.Tickets
+
+        .Include(t => t.Comments)
+        .ThenInclude(c => c.User)
+        .FirstOrDefaultAsync(t=>
+            t.Id == ticketId && 
+            t.AuthorId == userId
+        );
+
+        if(ticket == null)
+        {
+            return null;
+        }
+
+        return new TicketDetailsDto
+        {
+            Id = ticket.Id,
+            Title = ticket.Title,
+            Description = ticket.Description,
+            Category = ticket.Category,
+            Priority = ticket.Priority,
+            Status = ticket.Status,
+            CurrentUserId = userId,
+            Comments = ticket.Comments
+                .OrderBy(c => c.CreatedAt)
+                .Select(c => new TicketCommentDto
+                {
+                    Id = c.Id,
+                    Message = c.Message,
+                    CreatedAt = c.CreatedAt,
+                    UserId = c.UserId,
+                    Author = c.User.Username,
+                    Role = c.User.Role
+                })
+                .ToList()
+        };
+    }
+
+    public async Task AddCommentAsync(
+        int ticketId,
+        int userId,
+        AddCommentDto dto)
+    {
+        var comment  = new TicketComment
+        {
+            TicketId = ticketId,
+            UserId = userId,
+            Message = dto.Message,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.TicketComments.Add(comment);
+
+        await _context.SaveChangesAsync();
+    }
+
+
+    
 }

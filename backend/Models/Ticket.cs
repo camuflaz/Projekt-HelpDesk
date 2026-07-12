@@ -27,5 +27,6 @@ public class Ticket
 
     public User? AssignedAdmin { get; set; }
 
+    public ICollection<TicketComment> Comments { get; set; } = new List<TicketComment>();
 
 }

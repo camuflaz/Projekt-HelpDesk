@@ -1,6 +1,6 @@
 import "./TicketList.css";
 
-function TicketCard ({ ticket }) {
+function TicketCard ({ ticket, onClick }) {
      const statusTranslations = {
             "new" : "Nowe",
             "in-progress" : "W realizacji",
@@ -16,7 +16,7 @@ function TicketCard ({ ticket }) {
         }
 
     return (
-        <div className="ticket-card">
+        <div className="ticket-card" onClick={onClick}>
             <div className="ticket-header">
                 <span>#{ticket.id}</span>
                 <span className={`status ${ticket.status}`}> {statusTranslations[ticket.status]} </span>

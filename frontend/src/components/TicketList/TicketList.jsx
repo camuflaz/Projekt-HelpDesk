@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import API_URL from "../../services/api";
 import TicketCard from "./TicketCard";
 
-function TicketList({title, endpoint}) {
+function TicketList({title, endpoint, onSelect}) {
     const [tickets, setTickets] = useState([]);
     useEffect(() => {
         loadTickets();
@@ -28,7 +28,7 @@ function TicketList({title, endpoint}) {
                 tickets.length === 0 ? <p>Brak zgłoszeń w tej kategorii</p>
                 :
                 tickets.map(ticket => (
-                    <TicketCard key={ticket.id} ticket={ticket} />
+                    <TicketCard key={ticket.id} ticket={ticket} onClick={() => onSelect(ticket)} />
                 ))
             }
         </>

@@ -1,3 +1,5 @@
+using backend.Models;
+
 namespace backend.DTOs;
 public class TicketDetailsDto
 {
@@ -17,5 +19,7 @@ public class TicketDetailsDto
 
     public DateTime CreatedAt { get; set; }
 
-    public string Username { get; set; } = string.Empty;
+    public int CurrentUserId { get; set; }
+
+    public List<TicketCommentDto> Comments { get; set; } = new();
 }

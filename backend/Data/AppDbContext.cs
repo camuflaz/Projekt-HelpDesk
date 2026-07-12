@@ -12,6 +12,8 @@ public class AppDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<Ticket> Tickets { get; set; }
 
+    public DbSet<TicketComment> TicketComments { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -27,5 +29,19 @@ public class AppDbContext : DbContext
             .WithMany(u => u.AssignedTickets)
             .HasForeignKey(t => t.AssignedAdminId)
             .OnDelete(DeleteBehavior.Restrict); 
+
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<TicketComment>()
+            .HasOne(c => c.Ticket)
+            .WithMany(t => t.Comments)
+            .HasForeignKey(c => c.TicketId);
+
+        modelBuilder.Entity<TicketComment>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.Comments)
+            .HasForeignKey(c => c.UserId);
+
+
     }
 }
