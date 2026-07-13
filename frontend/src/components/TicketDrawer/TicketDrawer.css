@@ -30,7 +30,6 @@
     z-index: 1000;
 
     border-radius: 12px;
-
 }
 
 
@@ -76,7 +75,7 @@
 }
 
 .drawer-section{
-    padding: 25px;
+    padding: 10px 25px 10px 25px;
 }
 
 .drawer-section h3{
@@ -84,11 +83,11 @@
 
     font-size: 24px;
 
-    margin-bottom: 15px;
+    margin-bottom: 8px;
 }
 
 .drawer-section h4{
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     color: #ffffff;
 }
 
@@ -108,7 +107,6 @@
     border-radius: 12px;
 
     padding: 15px;
-
 }
 
 .drawer-grid label{
@@ -119,7 +117,6 @@
     color: #e9e9e9;
 
     margin-bottom: 6px;
-
 }
 
 .drawer-grid span{
@@ -138,7 +135,7 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
 }
 
 .chat-container{
@@ -174,7 +171,7 @@
 }
 
 .drawer-new{
-    color: #5696fc;
+    color: #229df0;
 }
 
 .drawer-in-progress{
@@ -202,10 +199,5 @@
 }
 
 .drawer-critical{
-    color: #fc2222;
-
-    font-weight: bold;
+    color: #fd846f;
 }
-
-
-

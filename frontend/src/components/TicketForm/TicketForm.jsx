@@ -13,6 +13,24 @@ function TicketForm() {
 
     const [tags, setTags] = useState("");
 
+    function handleChange(setter) { 
+        return (e) => {
+        const inputElement = e.target;
+        const value = inputElement.value;
+
+        if (value.length >= 100){
+            inputElement.setCustomValidity('Przekroczono limit znaków! Maksymalna długość to 100 znaków')
+            inputElement.reportValidity();
+        }else{
+            inputElement.setCustomValidity("");
+        }
+
+        setter(value);
+        
+        };
+    }
+    
+
     async function handleSubmit(e) {
         e.preventDefault();
 
@@ -54,9 +72,11 @@ function TicketForm() {
                     <label>Tytuł:</label>
                     <input
                         value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        onChange={handleChange(setTitle)}
                         required
+                        maxLength={100}
                     />
+
 
                     <label>Opis:</label>
                     <textarea
@@ -99,7 +119,8 @@ function TicketForm() {
                     <input
                         placeholder="Wprowadź tagi oddzielone przecinkami np. VPN, Windows, Office, myszka itp."
                         value={tags}
-                        onChange={(e) => setTags(e.target.value)}
+                        onChange={handleChange(setTags)}
+                        maxLength={100}
                     />
 
                     <button type="submit">Utwórz zgłoszenie</button>

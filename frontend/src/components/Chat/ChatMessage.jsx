@@ -6,7 +6,7 @@ function ChatMessage({ message, currentUserId }){
     return (
         <div className={ownMessage ?  "message own" : "message other"}>
             <div className="message-author">
-                {ownMessage ? "Ty" : message.userId}
+                {ownMessage ? "Ty" : "Admin"}
             </div>
 
             <div className="message-body">
