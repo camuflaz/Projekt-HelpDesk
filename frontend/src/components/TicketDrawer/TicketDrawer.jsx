@@ -138,7 +138,7 @@ function TicketDrawer({ ticketId, onClose }){
 
                         <h4>Opis</h4>
 
-                        <p>{ticket.description}</p>
+                        <p className="drawer-section-description">{ticket.description}</p>
                     </div>
 
                     <div className="drawer-section">
