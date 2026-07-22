@@ -4,6 +4,7 @@ using backend.Services;
 using backend.DTOs;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace backend.Controllers;
 
@@ -69,12 +70,60 @@ public class TicketsController : ControllerBase
         return Ok(tickets);
     }
 
+    [Authorize(Roles = "admin")]
+    [HttpGet("my-active-admin")]
+    public async Task<IActionResult> GetMyActiveTicketsAdmin()
+    {
+        var adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var tickets = await _ticketService.GetMyActiveTicketsAdmin(adminId);
+
+        return Ok(tickets);
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("my-closed-admin")]
+    public async Task<IActionResult> GetMyClosedTicketsAdmin()
+    {
+        var adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var tickets = await _ticketService.GetMyClosedTicketsAdmin(adminId);
+
+        return Ok(tickets);
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("open-tickets")]
+    public async Task<IActionResult> GetOpenTickets()
+    {
+        var tickets = await _ticketService.GetOpenTickets();
+
+        return Ok(tickets);
+    }
+
+    [Authorize(Roles = "admin")]
+    [HttpPost("{id}/assign")]
+    public async Task<IActionResult> AssignTicket(int id)
+    {
+        int adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var success = await _ticketService.AssignTicketToAdminAsync(id, adminId);
+
+        if (!success)
+        {
+            return NotFound();
+        }
+
+        return Ok(new { success = true });
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTicket(int id)
     {
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var role = User.FindFirst(ClaimTypes.Role)!.Value;
 
-        var ticket = await _ticketService.GetTicketDetailsAsync(id, userId);
+        var ticket = await _ticketService.GetTicketDetailsAsync(id, userId, role);
 
         if (ticket == null)
         {

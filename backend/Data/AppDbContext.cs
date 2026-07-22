@@ -28,7 +28,7 @@ public class AppDbContext : DbContext
             .HasOne(t => t.AssignedAdmin)
             .WithMany(u => u.AssignedTickets)
             .HasForeignKey(t => t.AssignedAdminId)
-            .OnDelete(DeleteBehavior.Restrict); 
+            .OnDelete(DeleteBehavior.SetNull); 
 
         base.OnModelCreating(modelBuilder);
 
@@ -41,7 +41,6 @@ public class AppDbContext : DbContext
             .HasOne(c => c.User)
             .WithMany(u => u.Comments)
             .HasForeignKey(c => c.UserId);
-
 
     }
 }

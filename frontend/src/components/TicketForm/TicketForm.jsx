@@ -1,6 +1,7 @@
 import "./TicketForm.css";
 import { useState } from "react";
 import API_URL from "../../services/api";
+import { notifyTicketRefresh } from "../../services/ticketRefresh";
 
 function TicketForm() {
     const [title, setTitle] = useState("");
@@ -58,6 +59,7 @@ function TicketForm() {
             setCategory("");
             setPriority("");
             setTags("");
+            notifyTicketRefresh();
         }
 
         else {

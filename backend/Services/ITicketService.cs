@@ -14,9 +14,18 @@ public interface ITicketService
 
     Task<List<TicketListDto>> GetMyClosedTickets(int userId);
 
+    Task<List<TicketListDto>> GetMyActiveTicketsAdmin(int adminId);
+
+    Task<List<TicketListDto>> GetMyClosedTicketsAdmin(int adminId);
+
+    Task<List<TicketListDto>> GetOpenTickets();
+
+    Task<bool> AssignTicketToAdminAsync(int ticketId, int adminId);
+
     Task<TicketDetailsDto?> GetTicketDetailsAsync(
         int ticketId,
-        int userId
+        int userId,
+        string role
     );
 
     Task AddCommentAsync(

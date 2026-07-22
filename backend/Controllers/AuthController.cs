@@ -78,12 +78,13 @@ namespace backend.Controllers
 
         var role = User.FindFirst(ClaimTypes.Role)?.Value;
 
-            return Ok(new
-            {
-                id = userId,
-                username = username,
-                role = role
-            });
+        return Ok(new
+        {
+            id = userId,
+            username = username,
+            role = role
+        });
+
         }
 
         [HttpPost("logout")]

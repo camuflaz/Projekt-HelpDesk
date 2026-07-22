@@ -25,6 +25,7 @@ public class TicketService : ITicketService
             Tags = dto.Tags,
             Status = "new",
             AuthorId = authorId,
+            AssignedAdminId = null,
             CreatedAt = DateTime.UtcNow,
             UpdatedAt = DateTime.UtcNow
         };
@@ -50,7 +51,30 @@ public class TicketService : ITicketService
                 Title = t.Title,
                 Status = t.Status,
                 Priority = t.Priority,
-                CreatedAt = t.CreatedAt
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
+            })
+
+            .ToListAsync();
+    }
+
+    public async Task<List<TicketListDto>> GetMyActiveTicketsAdmin(int adminId)
+    {
+        return await _context.Tickets
+            .Where (t => t.AssignedAdminId == adminId && t.Status != "closed" && t.Status != "resolved")
+
+            .OrderByDescending(t => t.UpdatedAt)
+
+            .Take(3)
+
+            .Select(t => new TicketListDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Priority = t.Priority,
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
             })
 
             .ToListAsync();
@@ -68,26 +92,102 @@ public class TicketService : ITicketService
                 Title = t.Title,
                 Status = t.Status,
                 Priority = t.Priority,
-                CreatedAt = t.CreatedAt
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
             })
             .ToListAsync();
     }
 
+        public async Task<List<TicketListDto>> GetMyClosedTicketsAdmin(int adminId)
+    {
+        return await _context.Tickets
+            .Where (t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved"))
+
+            .OrderByDescending(t => t.UpdatedAt)
+
+            .Take(3)
+
+            .Select(t => new TicketListDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Priority = t.Priority,
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
+            })
+
+            .ToListAsync();
+    }
+
+        public async Task<List<TicketListDto>> GetOpenTickets()
+    {
+        return await _context.Tickets
+            .Where(t => t.AssignedAdminId == null)
+
+            .OrderByDescending(t => t.UpdatedAt)
+
+            .Take(7)
+
+            .Select(t => new TicketListDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Priority = t.Priority,
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
+            })
+
+            .ToListAsync();
+
+    }
+
+
+    public async Task<bool> AssignTicketToAdminAsync(int ticketId, int adminId)
+    {
+        var ticket = await _context.Tickets
+            .FirstOrDefaultAsync(t => t.Id == ticketId);
+
+        if (ticket == null || ticket.AssignedAdminId != null)
+        {
+            return false;
+        }
+
+        ticket.AssignedAdminId = adminId;
+        ticket.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
 
     public async Task<TicketDetailsDto?> GetTicketDetailsAsync(
         int ticketId,
-        int userId)
+        int userId,
+        string role)
     {
-        var ticket = await _context.Tickets
+        Ticket? ticket;
 
-        .Include(t => t.Comments)
-        .ThenInclude(c => c.User)
-        .FirstOrDefaultAsync(t=>
-            t.Id == ticketId && 
-            t.AuthorId == userId
-        );
+        if (role == "admin")
+        {
+            ticket = await _context.Tickets
+                .Include(t => t.Comments)
+                .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(t => t.Id == ticketId && t.AssignedAdminId == userId);
+        }
+        else
+        {
+            ticket = await _context.Tickets
+                .Include(t => t.Comments)
+                .ThenInclude(c => c.User)
+                .FirstOrDefaultAsync(t =>
+                    t.Id == ticketId &&
+                    t.AuthorId == userId
+                );
+        }
 
-        if(ticket == null)
+        if (ticket == null)
         {
             return null;
         }
