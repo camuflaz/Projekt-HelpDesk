@@ -48,12 +48,10 @@ function TicketCard ({ ticket, onClick, onAssign }) {
                     <span className={`status ${ticket.status}`}> {statusTranslations[ticket.status]} </span>
                 </div>
 
-                <h3> {ticket.title} </h3>
+                <div className="ticket-title-line">
 
-                <div className="ticket-footer">
-                    <span> {priorityTranslations[ticket.priority]} </span>
-                    <span> { new Date(ticket.createdAt).toLocaleDateString() } </span>
-                    {showAssignButton && (
+                <h3> {ticket.title} </h3>
+                {showAssignButton && (
                         <button
                             className="assigned-button"
                             onClick={(e) => {
@@ -67,6 +65,12 @@ function TicketCard ({ ticket, onClick, onAssign }) {
                             <CgPinAlt />
                         </button>
                     )}
+
+                </div>
+
+                <div className="ticket-footer">
+                    <span> {priorityTranslations[ticket.priority]} </span>
+                    <span> { new Date(ticket.createdAt).toLocaleDateString() } </span>
                 </div>
             </div>
         );

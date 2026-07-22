@@ -11,11 +11,11 @@
 
     cursor: pointer;
 
-    transition: .06s ease-in-out;
+    transition: .08s ease-in;
 }
 
 .ticket-card:hover{
-    transform: translateY(-2px);
+    transform: translateY(-3px);
     background: rgba(128, 128, 128, 0.082);
 }
 
@@ -29,6 +29,34 @@
 
 }
 
+.ticket-title-line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 6px;
+}
+
+.assigned-button{
+    cursor: pointer;
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 30px;
+    padding: 5px 0 0 0;
+    transition: .2s ease-in-out;
+}
+
+.ticket-footer{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.assigned-button:hover{
+    border-radius: 12px;
+    background-color: rgba(137, 43, 226, 0.603);
+}
 
 .status{
     padding: 3px 8px;
