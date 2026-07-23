@@ -30,7 +30,9 @@ function TicketCard ({ ticket, onClick, onAssign }) {
                 
             </div>
             
-            <h3> {ticket.title} </h3>
+            <div className="ticket-title-line no-button">
+                <h3>{ticket.title}</h3>
+            </div>
             
             <div className="ticket-footer">
                 <span> {priorityTranslations[ticket.priority]} </span>
@@ -48,9 +50,8 @@ function TicketCard ({ ticket, onClick, onAssign }) {
                     <span className={`status ${ticket.status}`}> {statusTranslations[ticket.status]} </span>
                 </div>
 
-                <div className="ticket-title-line">
-
-                <h3> {ticket.title} </h3>
+                <div className={`ticket-title-line ${showAssignButton ? "with-button" : "no-button"}`}>
+                <h3>{ticket.title}</h3>
                 {showAssignButton && (
                         <button
                             className="assigned-button"

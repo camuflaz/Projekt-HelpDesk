@@ -26,7 +26,6 @@
     color: gray;
 
     font-size: 12px;
-
 }
 
 .ticket-title-line{
@@ -34,6 +33,15 @@
     justify-content: space-between;
     align-items: center;
     margin-top: 6px;
+    gap: 8px;
+}
+
+.ticket-title-line.no-button{
+    justify-content: center;
+}
+
+.ticket-title-line.with-button{
+    justify-content: space-between;
 }
 
 .assigned-button{

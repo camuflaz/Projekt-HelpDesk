@@ -7,6 +7,7 @@ import { useAuth } from "../../context/AuthContext";
 
 function Dashboard() {
     const [ticketId, setSelectedTicket] = useState(null);
+    const [isActiveView, setIsActiveView] = useState(false);
     const { user } = useAuth();
 
     if(!user){
@@ -23,16 +24,26 @@ function Dashboard() {
             <div className="dashboard-right">
                 <div className="dashboard-box-upper">
                     <TicketList title="Aktywne zgłoszenia" endpoint="my-active"
-                    onSelect={(ticket) => setSelectedTicket(ticket.id)}/>
+                    onSelect={(ticket) => {
+                        setSelectedTicket(ticket.id);
+                        setIsActiveView(true);
+                    }}/>
                 </div>
 
                 <div className="dashboard-box-lower">
                     <TicketList title="Zamknięte / Rozwiązane zgłoszenia" endpoint="my-closed"
-                    onSelect={(ticket) => setSelectedTicket(ticket.id)}/>
+                    onSelect={(ticket) => {
+                        setSelectedTicket(ticket.id);
+                        setIsActiveView(false);
+                    }}/>
                 </div>
             </div>
             <TicketDrawer ticketId={ticketId} 
-                    onClose={() => setSelectedTicket(null)}/>
+                    onClose={() => {
+                        setSelectedTicket(null);
+                        setIsActiveView(false);
+                    }}
+                    isActiveView={isActiveView}/>
         </div>
      );
     }
@@ -47,7 +58,10 @@ function Dashboard() {
 
                     <div className="admin-card-half">
                         <TicketList title="Otwarte zgłoszenia" endpoint="open-tickets"
-                        onSelect={(ticket) => setSelectedTicket(ticket.id)}/>
+                        onSelect={(ticket) => {
+                            setSelectedTicket(ticket.id);
+                            setIsActiveView(true);
+                        }}/>
                     </div>
 
                     <div className="admin-card-half">
@@ -58,16 +72,26 @@ function Dashboard() {
                 <div className="dashboard-right">
                     <div className="dashboard-box-upper">
                         <TicketList title="Aktywne zgłoszenia" endpoint="my-active-admin"
-                        onSelect={(ticket) => setSelectedTicket(ticket.id)}/>
+                        onSelect={(ticket) => {
+                            setSelectedTicket(ticket.id);
+                            setIsActiveView(true);
+                        }}/>
                     </div>
 
                     <div className="dashboard-box-lower">
                         <TicketList title="Zamknięte / Rozwiązane zgłoszenia" endpoint="my-closed-admin"
-                        onSelect={(ticket) => setSelectedTicket(ticket.id)}/>
+                        onSelect={(ticket) => {
+                            setSelectedTicket(ticket.id);
+                            setIsActiveView(false);
+                        }}/>
                     </div>
                 </div>
                 <TicketDrawer ticketId={ticketId} 
-                        onClose={() => setSelectedTicket(null)}/>
+                        onClose={() => {
+                            setSelectedTicket(null);
+                            setIsActiveView(false);
+                        }}
+                        isActiveView={isActiveView}/>
         </div>
         );
     }

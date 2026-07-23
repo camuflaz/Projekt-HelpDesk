@@ -133,6 +133,22 @@ public class TicketsController : ControllerBase
         return Ok(ticket);
     }
 
+    [Authorize(Roles = "admin")]
+    [HttpPatch("{id}/status")]
+    public async Task<IActionResult> UpdateTicketStatus(int id, UpdateTicketDto dto)
+    {
+        int adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var success = await _ticketService.UpdateTicketStatusAsync(id, adminId, dto.Status);
+
+        if (!success)
+        {
+            return BadRequest(new { success = false, message = "Nie można zaktualizować statusu zgłoszenia." });
+        }
+
+        return Ok(new { success = true });
+    }
+
     [HttpPost("{id}/comments")]
     public async Task<IActionResult> AddComment(int id, AddCommentDto dto)
     {

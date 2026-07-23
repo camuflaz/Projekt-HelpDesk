@@ -28,6 +28,12 @@ public interface ITicketService
         string role
     );
 
+    Task<bool> UpdateTicketStatusAsync(
+        int ticketId,
+        int adminId,
+        string status
+    );
+
     Task AddCommentAsync(
         int ticketId,
         int userId,

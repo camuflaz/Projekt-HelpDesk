@@ -127,7 +127,7 @@ public class TicketService : ITicketService
 
             .OrderByDescending(t => t.UpdatedAt)
 
-            .Take(7)
+            .Take(5)
 
             .Select(t => new TicketListDto
             {
@@ -155,6 +155,30 @@ public class TicketService : ITicketService
         }
 
         ticket.AssignedAdminId = adminId;
+        ticket.Status = "in-progress";
+        ticket.UpdatedAt = DateTime.UtcNow;
+
+        await _context.SaveChangesAsync();
+
+        return true;
+    }
+
+    public async Task<bool> UpdateTicketStatusAsync(int ticketId, int adminId, string status)
+    {
+        if (status != "resolved" && status != "closed")
+        {
+            return false;
+        }
+
+        var ticket = await _context.Tickets
+            .FirstOrDefaultAsync(t => t.Id == ticketId && t.AssignedAdminId == adminId);
+
+        if (ticket == null)
+        {
+            return false;
+        }
+
+        ticket.Status = status;
         ticket.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync();
@@ -174,7 +198,9 @@ public class TicketService : ITicketService
             ticket = await _context.Tickets
                 .Include(t => t.Comments)
                 .ThenInclude(c => c.User)
-                .FirstOrDefaultAsync(t => t.Id == ticketId && t.AssignedAdminId == userId);
+                .FirstOrDefaultAsync(t =>
+                    t.Id == ticketId &&
+                    (t.AssignedAdminId == null || t.AssignedAdminId == userId));
         }
         else
         {

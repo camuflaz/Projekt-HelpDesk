@@ -45,6 +45,11 @@
     border-bottom: 1px solid white;
 }
 
+.drawer-header-buttons{
+    display: flex;
+    gap: 20px;
+}
+
 .drawer-header h2{
     margin: 0;
 
@@ -70,7 +75,23 @@
     transition: .2s;
 }
 
-.drawer-header button:hover{
+.button-pin-me{
+    transition: .2s;
+}
+
+.button-pin-me:hover{
+    color: rgb(217, 65, 255);
+}
+
+.button-close:hover{
+    color: #2498f7;
+}
+
+.button-status-resolved:hover{
+    color: #14df9b;
+}
+
+.button-status-closed:hover{
     color: #ef4444;
 }
 
