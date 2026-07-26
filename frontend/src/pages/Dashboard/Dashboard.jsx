@@ -4,6 +4,7 @@ import TicketForm from "../../components/TicketForm/TicketForm";
 import TicketList from "../../components/TicketList/TicketList";
 import TicketDrawer from "../../components/TicketDrawer/TicketDrawer"
 import { useAuth } from "../../context/AuthContext";
+import TicketAdminStatistics from "../../components/Statistics/TicketAdminStatistics";
 
 function Dashboard() {
     const [ticketId, setSelectedTicket] = useState(null);
@@ -53,7 +54,7 @@ function Dashboard() {
             <div className="dashboard admin">
                 <div className="dashboard-left admin">
                     <div className="admin-card-header">
-                        
+                        <TicketAdminStatistics />
                     </div>
 
                     <div className="admin-card-half">
@@ -65,7 +66,11 @@ function Dashboard() {
                     </div>
 
                     <div className="admin-card-half">
-                        
+                        <TicketList title="Nowe wiadomości" endpoint="get-tickets-w-new-comments"
+                        onSelect={(ticket) => {
+                            setSelectedTicket(ticket.id);
+                            setIsActiveView(true);
+                        }}/>
                     </div>
                 </div>
 

@@ -5,6 +5,7 @@
     padding: 30px;
     gap: 30px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .dashboard.admin{
@@ -14,6 +15,7 @@
     padding: 30px;
     gap: 30px;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .dashboard-left{
@@ -23,6 +25,8 @@
     background-color: #fff;
     padding: 25px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    overflow: auto;
 }
 
 .dashboard-left.admin{
@@ -39,6 +43,8 @@
 
     background-color: transparent;
     box-shadow: none;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .admin-card-header{
@@ -47,6 +53,8 @@
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    overflow: auto;
 }
 
 .admin-card-half{
@@ -54,6 +62,8 @@
     border-radius: 12px;
     padding: 14px 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    overflow: auto;
 }
 
 .dashboard-right{
@@ -67,6 +77,7 @@
     text-align: center;
 
     gap: 25px;
+    min-height: 0;
 
 }
 
@@ -80,6 +91,8 @@
     padding: 14px 20px;
 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    overflow: auto;
 }
 
 .dashboard-box-lower{
@@ -92,4 +105,6 @@
     padding: 14px 20px;
 
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    min-height: 0;
+    overflow: auto;
 }

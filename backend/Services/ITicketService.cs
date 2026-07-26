@@ -20,7 +20,12 @@ public interface ITicketService
 
     Task<List<TicketListDto>> GetOpenTickets();
 
+    Task<TicketStatisticsDto> GetAdminStatisticsAsync(int adminId);
+
     Task<bool> AssignTicketToAdminAsync(int ticketId, int adminId);
+
+    Task<List<TicketListDto>> GetTicketwNewComment(int adminId);
+
 
     Task<TicketDetailsDto?> GetTicketDetailsAsync(
         int ticketId,

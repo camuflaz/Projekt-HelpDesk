@@ -43,7 +43,6 @@ public class TicketService : ITicketService
 
             .OrderByDescending(t => t.CreatedAt)
 
-            .Take(3)
 
             .Select(t => new TicketListDto
             {
@@ -65,8 +64,6 @@ public class TicketService : ITicketService
 
             .OrderByDescending(t => t.UpdatedAt)
 
-            .Take(3)
-
             .Select(t => new TicketListDto
             {
                 Id = t.Id,
@@ -85,7 +82,6 @@ public class TicketService : ITicketService
         return await _context.Tickets
             .Where(t => t.AuthorId == userId && (t.Status == "closed" || t.Status == "resolved"))
             .OrderByDescending(t => t.CreatedAt)
-            .Take(3)
             .Select(t=> new TicketListDto
             {
                 Id = t.Id,
@@ -98,14 +94,12 @@ public class TicketService : ITicketService
             .ToListAsync();
     }
 
-        public async Task<List<TicketListDto>> GetMyClosedTicketsAdmin(int adminId)
+    public async Task<List<TicketListDto>> GetMyClosedTicketsAdmin(int adminId)
     {
         return await _context.Tickets
             .Where (t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved"))
 
             .OrderByDescending(t => t.UpdatedAt)
-
-            .Take(3)
 
             .Select(t => new TicketListDto
             {
@@ -120,7 +114,83 @@ public class TicketService : ITicketService
             .ToListAsync();
     }
 
-        public async Task<List<TicketListDto>> GetOpenTickets()
+    
+    public async Task<List<TicketListDto>> GetTicketwNewComment(int adminId)
+    {
+        return await _context.Tickets
+            .Where(t => t.AssignedAdminId == adminId && t.Status == "in-progress")
+            .Where(t => t.Comments.Any())
+            .Where(t => t.Comments
+                .OrderByDescending(c => c.CreatedAt)
+                .FirstOrDefault()!.UserId != adminId)
+            .OrderByDescending(t => t.UpdatedAt)
+            .Select(t => new TicketListDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Status = t.Status,
+                Priority = t.Priority,
+                CreatedAt = t.CreatedAt,
+                AssignedAdminId = t.AssignedAdminId
+            })
+            .ToListAsync();
+    }
+
+
+    public async Task<TicketStatisticsDto> GetAdminStatisticsAsync(int adminId)
+    {
+        var tickets = await _context.Tickets
+            .Where(t => t.AssignedAdminId == adminId || t.AssignedAdminId == null)
+            .ToListAsync();
+
+        var activeTickets = tickets.Count(t => t.AssignedAdminId == adminId && t.Status != "closed" && t.Status != "resolved");
+        var newTicketsAvailable = tickets.Count(t => t.AssignedAdminId == null && t.Status == "new");
+        var closedAndResolvedTickets = tickets.Count(t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved"));
+
+        var completedTickets = tickets
+            .Where(t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved") && t.ClosedAt != null)
+            .ToList();
+
+        var averageCompletionMinutes = completedTickets.Count == 0
+            ? 0
+            : (int)Math.Round(completedTickets.Average(t => (t.ClosedAt!.Value - t.CreatedAt).TotalMinutes));
+
+        var hours = averageCompletionMinutes / 60;
+        var minutes = averageCompletionMinutes % 60;
+
+        string GetPolishUnit(int value, string singular, string few, string many)
+        {
+            if (value == 1)
+            {
+                return singular;
+            }
+
+            if (value % 10 >= 2 && value % 10 <= 4 && (value % 100 < 10 || value % 100 >= 20))
+            {
+                return few;
+            }
+
+            return many;
+        }
+
+        var formattedAverageCompletionTime = averageCompletionMinutes == 0
+            ? "0 minut"
+            : string.Join(" ", new[]
+            {
+                hours > 0 ? $"{hours} {GetPolishUnit(hours, "godzina", "godziny", "godzin")}" : null,
+                minutes > 0 ? $"{minutes} {GetPolishUnit(minutes, "minuta", "minuty", "minut")}" : null
+            }.Where(part => part != null));
+
+        return new TicketStatisticsDto
+        {
+            ActiveTickets = activeTickets,
+            NewTicketsAvailable = newTicketsAvailable,
+            ClosedAndResolvedTickets = closedAndResolvedTickets,
+            AverageCompletionTime = formattedAverageCompletionTime
+        };
+    }
+
+    public async Task<List<TicketListDto>> GetOpenTickets()
     {
         return await _context.Tickets
             .Where(t => t.AssignedAdminId == null)
@@ -178,8 +248,18 @@ public class TicketService : ITicketService
             return false;
         }
 
-        ticket.Status = status;
-        ticket.UpdatedAt = DateTime.UtcNow;
+        if(status == "resolved" || status == "closed")
+        {
+            ticket.Status = status;
+            ticket.ClosedAt = DateTime.UtcNow;
+        }
+        else
+        {
+            ticket.Status = status;
+            ticket.UpdatedAt = DateTime.UtcNow;
+        }
+
+        
 
         await _context.SaveChangesAsync();
 

@@ -1,0 +1,66 @@
+.admin-stats-grid{
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    gap: 10px;
+}
+
+.admin-stat-card{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-stat-icon{
+    font-size: 20px;
+}
+
+.admin-stat-content-activeTickets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 12px;
+    background: #f90;
+    padding: 5px;
+    color: white;
+}
+
+.admin-stat-content-newTicketsAvailable{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 12px;
+    background: #2196f3;
+    padding: 5px;
+    color: white;
+}
+
+.admin-stat-content-closedAndResolvedTickets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 12px;
+    background: #4caf50;
+    padding: 5px;
+    color: white;
+}
+
+.admin-stat-content-averageCompletionTime{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 12px;
+    background: #929292;
+    padding: 8px;
+    color: white;
+}
+
+.admin-stat-label{
+    font-weight: bold;
+    text-align: center;
+}

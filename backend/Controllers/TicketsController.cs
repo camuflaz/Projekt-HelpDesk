@@ -117,6 +117,17 @@ public class TicketsController : ControllerBase
         return Ok(new { success = true });
     }
 
+    [Authorize(Roles = "admin")]
+    [HttpGet("get-tickets-w-new-comments")]
+    public async Task<IActionResult> GetTicketwNewComment()
+    {
+        int adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        var tickets = await _ticketService.GetTicketwNewComment(adminId);
+
+        return Ok(tickets);
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> GetTicket(int id)
     {
@@ -131,6 +142,17 @@ public class TicketsController : ControllerBase
         }
 
         return Ok(ticket);
+    }
+
+
+    [Authorize(Roles = "admin")]
+    [HttpGet("admin-statistics")]
+    public async Task<IActionResult> GetAdminStatistics()
+    {
+        int adminId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+        var statistics = await _ticketService.GetAdminStatisticsAsync(adminId);
+
+        return Ok(statistics);
     }
 
     [Authorize(Roles = "admin")]
