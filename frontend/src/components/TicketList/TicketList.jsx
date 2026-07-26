@@ -47,8 +47,8 @@ function TicketList({title, endpoint, onSelect}) {
     }
 
     return(
-        <>
-            <h2>{title}</h2>
+        <div className="ticket-list">
+            <h2 className="ticket-list-title">{title}</h2>
             {
                 tickets.length === 0 ? <p>Brak zgłoszeń w tej kategorii</p>
                 :
@@ -61,7 +61,7 @@ function TicketList({title, endpoint, onSelect}) {
                     />
                 ))
             }
-        </>
+        </div>
     );
 }
 export default TicketList;

@@ -1,3 +1,19 @@
+.ticket-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-list-title {
+       z-index: 2;
+    text-align: center;
+    background: #ffffff6e;
+    border-radius: 12px;
+    padding: 2px 0 0;
+    font-size: 22px;
+    position: sticky;
+    top: 0;
+}
+
 .ticket-card{
     background: white;
 
