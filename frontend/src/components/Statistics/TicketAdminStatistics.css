@@ -38,13 +38,24 @@
     color: white;
 }
 
-.admin-stat-content-closedAndResolvedTickets{
+.admin-stat-content-ResolvedTickets{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 5px;
     border-radius: 12px;
     background: #4caf50;
+    padding: 5px;
+    color: white;
+}
+
+.admin-stat-content-ClosedTickets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    border-radius: 12px;
+    background: #e63b2f;
     padding: 5px;
     color: white;
 }

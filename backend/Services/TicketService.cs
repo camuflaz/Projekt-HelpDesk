@@ -145,7 +145,8 @@ public class TicketService : ITicketService
 
         var activeTickets = tickets.Count(t => t.AssignedAdminId == adminId && t.Status != "closed" && t.Status != "resolved");
         var newTicketsAvailable = tickets.Count(t => t.AssignedAdminId == null && t.Status == "new");
-        var closedAndResolvedTickets = tickets.Count(t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved"));
+        var resolvedTickets = tickets.Count(t => t.AssignedAdminId == adminId && t.Status == "resolved");
+        var closedTickets = tickets.Count(t => t.AssignedAdminId == adminId && t.Status == "closed");
 
         var completedTickets = tickets
             .Where(t => t.AssignedAdminId == adminId && (t.Status == "closed" || t.Status == "resolved") && t.ClosedAt != null)
@@ -185,7 +186,8 @@ public class TicketService : ITicketService
         {
             ActiveTickets = activeTickets,
             NewTicketsAvailable = newTicketsAvailable,
-            ClosedAndResolvedTickets = closedAndResolvedTickets,
+            ResolvedTickets = resolvedTickets,
+            ClosedTickets = closedTickets,
             AverageCompletionTime = formattedAverageCompletionTime
         };
     }
@@ -338,6 +340,70 @@ public class TicketService : ITicketService
         _context.TicketComments.Add(comment);
 
         await _context.SaveChangesAsync();
+    }
+
+
+    public async Task<TicketPageResultDto> GetTicketsAsync(TicketQueryDto query, int userId, string role)
+    {
+        IQueryable<Ticket> tickets = _context.Tickets;
+
+        if(role == "user")
+        {
+            tickets = tickets.Where(t => t.AuthorId == userId);
+        }
+
+        if (!string.IsNullOrWhiteSpace(query.Search))
+        {
+            var search = query.Search.ToLower();
+
+            tickets = tickets.Where(t => 
+            t.Title.ToLower().Contains(search) || t.Description.ToLower().Contains(search));
+        }
+
+        if (!string.IsNullOrWhiteSpace(query.Status))
+        {
+            tickets = tickets.Where(t => t.Status == query.Status);
+        }
+
+        if (!string.IsNullOrWhiteSpace(query.Priority))
+        {
+            tickets = tickets.Where(t => t.Priority == query.Priority);
+        }
+
+        if (!string.IsNullOrWhiteSpace(query.Category))
+        {
+            tickets = tickets.Where(t => t.Category == query.Category);
+        }
+
+        tickets = tickets
+            .OrderBy(t => t.Status == "new" ? 0 :
+                          t.Status == "in-progress" ? 1 :
+                          t.Status == "resolved" ? 2 : 3)
+            .ThenByDescending(t => t.CreatedAt);
+
+        var total = await tickets.CountAsync();
+
+        var items = await tickets
+            .Skip((query.Page - 1) * query.PageSize)
+            .Take(query.PageSize)
+            .Select(t => new TicketListDto
+            {
+                Id = t.Id,
+                Title = t.Title,
+                Priority = t.Priority,
+                Status = t.Status,
+                CreatedAt = t.CreatedAt
+            })
+            .ToListAsync();
+
+        return new TicketPageResultDto
+        {
+            Items = items,
+            Page = query.Page,
+            PageSize = query.PageSize,
+            TotalItems = total,
+            TotalPages = (int)Math.Ceiling(total / (double)query.PageSize)
+        };
     }
 
 

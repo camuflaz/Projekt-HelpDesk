@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import API_URL from "../../services/api";
-import { CgNotes, CgCheckO, CgTime, CgAdd } from "react-icons/cg";
+import { CgNotes, CgCheckO, CgTime, CgAdd, CgCloseR, CgClose } from "react-icons/cg";
 import "./TicketAdminStatistics.css";
 import { secondsToMilliseconds } from "framer-motion";
 
@@ -11,7 +11,8 @@ function TicketAdminStatistics() {
     const [stats, setStats] = useState({
         activeTickets: 0,
         newTicketsAvailable: 0,
-        closedAndResolvedTickets: 0,
+        ResolvedTickets: 0,
+        ClosedTickets: 0,
         averageCompletionTime: ""
     });
 
@@ -56,10 +57,16 @@ function TicketAdminStatistics() {
             icon: <CgAdd className="stat-icon" />
         },
         {
-            key: "closedAndResolvedTickets",
-            label: "Ukończone zgłoszenia",
-            value: stats.closedAndResolvedTickets,
+            key: "ResolvedTickets",
+            label: "Rozwiązane zgłoszenia",
+            value: stats.resolvedTickets,
             icon: <CgCheckO className="stat-icon" />
+        },
+        {
+            key: "ClosedTickets",
+            label: "Zamknięte zgłoszenia",
+            value: stats.closedTickets,
+            icon: <CgCloseR className="stat-icon" />
         },
         {
             key: "averageCompletionTime",

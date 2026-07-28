@@ -26,6 +26,8 @@ public interface ITicketService
 
     Task<List<TicketListDto>> GetTicketwNewComment(int adminId);
 
+    Task<TicketPageResultDto> GetTicketsAsync(TicketQueryDto query, int userId, string role);
+
 
     Task<TicketDetailsDto?> GetTicketDetailsAsync(
         int ticketId,

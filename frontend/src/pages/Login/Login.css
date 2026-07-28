@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-h2 {
+.login-form h2 {
   text-align: center;
   margin-bottom: 0.5vh;
   color: #1e293b;

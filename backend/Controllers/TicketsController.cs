@@ -181,4 +181,17 @@ public class TicketsController : ControllerBase
         return Ok();
     }
 
+    [Authorize]
+    [HttpGet]
+    public async Task<IActionResult> GetTickets([FromQuery] TicketQueryDto query)
+    {
+        int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        string role = User.FindFirst(ClaimTypes.Role)!.Value;
+
+        var result = await _ticketService.GetTicketsAsync(query, userId, role);
+
+        return Ok(result);
+    }
+
 }
