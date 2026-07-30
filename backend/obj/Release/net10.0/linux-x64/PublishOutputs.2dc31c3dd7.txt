@@ -45,8 +45,17 @@
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/BuildHost-netcore/tr/System.CommandLine.resources.dll
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/BuildHost-netcore/zh-Hans/System.CommandLine.resources.dll
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/BuildHost-netcore/zh-Hant/System.CommandLine.resources.dll
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/BuildHost-net472/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe.config
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll.config
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/appsettings.Development.json
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/appsettings.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/appsettings.Development.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/appsettings.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/backend.deps.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/backend.runtimeconfig.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/backend.staticwebassets.endpoints.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.deps.json
+/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/publish-output/BuildHost-netcore/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/backend.dll
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/backend.runtimeconfig.json
 /mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend-publish/backend.pdb

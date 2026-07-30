@@ -6,6 +6,15 @@ function TicketCard ({ ticket, onClick, onAssign }) {
     const { user } = useAuth();
     const showAssignButton = user?.role === "admin" && ticket?.assignedAdminId === null;
 
+    const formatDate = (value) => {
+        if (!value) return "";
+        return new Date(value).toLocaleDateString("pl-PL", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit"
+        });
+    };
+
     const statusTranslations = {
             "new" : "Nowe",
             "in-progress" : "W realizacji",
@@ -36,7 +45,7 @@ function TicketCard ({ ticket, onClick, onAssign }) {
             
             <div className="ticket-footer">
                 <span> {priorityTranslations[ticket.priority]} </span>
-                <span> { new Date(ticket.createdAt).toLocaleDateString() } </span>
+                <span> {formatDate(ticket.createdAt)} </span>
             </div>
         </div>
     );
@@ -71,7 +80,7 @@ function TicketCard ({ ticket, onClick, onAssign }) {
 
                 <div className="ticket-footer">
                     <span> {priorityTranslations[ticket.priority]} </span>
-                    <span> { new Date(ticket.createdAt).toLocaleDateString() } </span>
+                    <span> {formatDate(ticket.createdAt)} </span>
                 </div>
             </div>
         );

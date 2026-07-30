@@ -21,7 +21,7 @@ public class TicketsController : ControllerBase
         _ticketService = ticketService;
     }
 
-    
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> CreateTicket( CreateTicketDto dto)
     {
@@ -182,7 +182,7 @@ public class TicketsController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet]
+    [HttpGet("all-tickets")]
     public async Task<IActionResult> GetTickets([FromQuery] TicketQueryDto query)
     {
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);

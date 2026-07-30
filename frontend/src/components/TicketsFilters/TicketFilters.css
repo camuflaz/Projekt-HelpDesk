@@ -1,0 +1,110 @@
+.ticket-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    background: #ffffff;
+    padding: 18px 22px;
+
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.08);
+}
+
+.ticket-filters-main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.ticket-filters-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.ticket-filters-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ticket-filters input,
+.ticket-filters select {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: .2s;
+}
+
+.ticket-filters input:focus,
+.ticket-filters select:focus {
+    outline: none;
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 3px rgba(79, 140, 255, .18);
+}
+
+.ticket-filters select {
+    min-width: 170px;
+    background: white;
+    cursor: pointer;
+}
+
+.ticket-filters select:hover {
+    border-color: #4f8cff;
+}
+
+.filter-toggle {
+    height: 45px;
+    padding: 0 20px;
+    border: none;
+    border-radius: 10px;
+    background: #4f8cff;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: .2s;
+}
+
+.filter-toggle:hover {
+    background: #3a78ee;
+}
+
+.filter-toggle:active {
+    transform: scale(.98);
+}
+
+.ticket-filters-panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    padding-top: 4px;
+}
+
+.filter-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 14px;
+    color: #4b5563;
+}
+
+.filter-field span {
+    font-weight: 600;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.date-range input {
+    min-width: 0;
+}

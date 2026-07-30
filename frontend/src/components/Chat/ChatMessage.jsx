@@ -14,7 +14,7 @@ function ChatMessage({ message, currentUserId }){
             </div>
             
             <div className="message-date">
-                {new Date(message.createdAt).toLocaleString()};
+                {new Date(message.createdAt).toLocaleString("pl-PL")}
             </div>
         </div>
 

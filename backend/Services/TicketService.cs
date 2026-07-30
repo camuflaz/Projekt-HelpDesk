@@ -14,6 +14,16 @@ public class TicketService : ITicketService
         _context = context;
     }
 
+    private static DateTime NormalizeToUtc(DateTime value)
+    {
+        return value.Kind switch
+        {
+            DateTimeKind.Utc => value,
+            DateTimeKind.Local => value.ToUniversalTime(),
+            _ => DateTime.SpecifyKind(value, DateTimeKind.Utc)
+        };
+    }
+
     public async Task<Ticket> CreateTicketAsync(CreateTicketDto dto, int authorId)
     {
         var ticket = new Ticket
@@ -357,7 +367,7 @@ public class TicketService : ITicketService
             var search = query.Search.ToLower();
 
             tickets = tickets.Where(t => 
-            t.Title.ToLower().Contains(search) || t.Description.ToLower().Contains(search));
+            t.Title.ToLower().Contains(search) || t.Description.ToLower().Contains(search) || t.Tags.ToLower().Contains(search));
         }
 
         if (!string.IsNullOrWhiteSpace(query.Status))
@@ -373,6 +383,18 @@ public class TicketService : ITicketService
         if (!string.IsNullOrWhiteSpace(query.Category))
         {
             tickets = tickets.Where(t => t.Category == query.Category);
+        }
+
+        if (query.DateFrom.HasValue)
+        {
+            var fromDate = NormalizeToUtc(query.DateFrom.Value.Date);
+            tickets = tickets.Where(t => t.CreatedAt >= fromDate);
+        }
+
+        if (query.DateTo.HasValue)
+        {
+            var toDate = NormalizeToUtc(query.DateTo.Value.Date.AddDays(1).AddTicks(-1));
+            tickets = tickets.Where(t => t.CreatedAt <= toDate);
         }
 
         tickets = tickets
