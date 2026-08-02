@@ -25,7 +25,29 @@ function TicketList({title, endpoint, onSelect}) {
             setTickets(prevTickets =>
                 prevTickets.map(ticket =>
                     ticket.id === ticketId
-                        ? { ...ticket, assignedAdminId: adminId }
+                        ? { ...ticket, assignedAdminId: adminId, status: "in-progress" }
+                        : ticket
+                )
+            );
+            notifyTicketRefresh();
+        }
+    }
+
+    async function handleUpdateStatus(ticketId, nextStatus) {
+        const response = await fetch(`${API_URL}/tickets/${ticketId}/status`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ status: nextStatus, comment: "" })
+        });
+
+        if (response.ok) {
+            setTickets(prevTickets =>
+                prevTickets.map(ticket =>
+                    ticket.id === ticketId
+                        ? { ...ticket, status: nextStatus }
                         : ticket
                 )
             );
@@ -58,6 +80,7 @@ function TicketList({title, endpoint, onSelect}) {
                         ticket={ticket}
                         onClick={() => onSelect(ticket)}
                         onAssign={handleAssignTicket}
+                        onUpdateStatus={handleUpdateStatus}
                     />
                 ))
             }

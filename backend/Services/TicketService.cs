@@ -318,6 +318,9 @@ public class TicketService : ITicketService
             Category = ticket.Category,
             Priority = ticket.Priority,
             Status = ticket.Status,
+            Tags = ticket.Tags,
+            CreatedAt = ticket.CreatedAt,
+            UpdatedAt = ticket.UpdatedAt,
             CurrentUserId = userId,
             Comments = ticket.Comments
                 .OrderBy(c => c.CreatedAt)
