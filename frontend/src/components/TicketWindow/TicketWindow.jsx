@@ -171,12 +171,28 @@ function TicketWindow({ ticketId, onClose }) {
     const isAdmin = user?.role === "admin";
     const isAssigned = ticket?.assignedAdminId != null;
     const currentStatus = ticket?.status ?? "new";
-    const timelineSteps = [
-        { key: "new", label: "Utworzone" },
-        { key: "in-progress", label: "W realizacji" },
-        { key: "resolved", label: "Rozwiązane" },
-        { key: "closed", label: "Zamknięte" }
-    ];
+    const timelineSteps = 
+        ticket?.status === "closed"
+            ? [
+                { key: "new", label: "Nowe" },
+                { key: "in-progress", label: "W realizacji" },
+                { key: "closed", label: "Zamknięte" }
+            ]
+            : [
+                { key: "new", label: "Nowe" },
+                { key: "in-progress", label: "W realizacji" },
+                { key: "resolved", label: "Rozwiązane" }
+            ];
+
+    const getTimelineDotClassName = (stepKey, isCurrent, isCompleted) => {
+        const stateClass = isCurrent ? "current" : isCompleted ? "done" : "pending";
+        const statusClass = isCurrent || isCompleted ? stepKey : "";
+
+        return ["timeline-dot", stateClass, statusClass].filter(Boolean).join(" ");
+    };
+
+    const getTimelineLineClassName = (isCompleted) => (isCompleted ? "timeline-line done" : "timeline-line pending");
+    
     const formatTicketDate = (value) => {
         if (!value) {
             return "brak danych";
@@ -292,18 +308,20 @@ function TicketWindow({ ticketId, onClose }) {
                                 </div>
                                 <div className="ticket-window-timeline">
                                     {timelineSteps.map((step, index) => {
-                                        const currentIndex = timelineSteps.findIndex(item => item.key === currentStatus);
-                                        const isPast = index < currentIndex;
-                                        const isCurrent = currentStatus === step.key;
-                                        const stateClass = isCurrent ? "current" : isPast ? "done" : "pending";
+                                        const currentIndex = timelineSteps.findIndex(x => x.key === currentStatus);
+
+                                        const isCompleted = index < currentIndex;
+                                        const isCurrent = index === currentIndex;
+                                        const dotClassName = getTimelineDotClassName(step.key, isCurrent, isCompleted);
+                                        const lineClassName = getTimelineLineClassName(isCompleted);
 
                                         return (
-                                            <div key={step.key} className={`ticket-window-step ${stateClass}`}>
-                                                <span className={`ticket-window-step-dot ${stateClass}`} />
-                                                <div>
-                                                    <strong>{step.label}</strong>
-                                                    <p>{isCurrent ? "Aktualny etap" : isPast ? "Gotowe" : ""}</p>
-                                                </div>
+                                            <div key={step.key} className="timeline-item">
+                                                <div className={dotClassName} />
+
+                                                <span>{step.label}</span>
+
+                                                {index < timelineSteps.length - 1 && <div className={lineClassName} />}
                                             </div>
                                         );
                                     })}
