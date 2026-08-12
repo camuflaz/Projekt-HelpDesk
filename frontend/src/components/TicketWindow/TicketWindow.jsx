@@ -363,6 +363,7 @@ function TicketWindow({ ticketId, onClose }) {
                                         <div className="ticket-window-card-header">
                                             <h3>Komunikacja</h3>
                                             <div className="ticket-window-tabs">
+                                                {isAdmin && (
                                                 <button
                                                     type="button"
                                                     className={activeTab === "chat" ? "active" : ""}
@@ -370,6 +371,7 @@ function TicketWindow({ ticketId, onClose }) {
                                                 >
                                                     Rozmowa z użytkownikiem
                                                 </button>
+                                                )}
                                                 {isAdmin && (
                                                     <button
                                                         type="button"
@@ -418,25 +420,6 @@ function TicketWindow({ ticketId, onClose }) {
                                         </form>
                                     </div>
 
-                                    {isAdmin && (
-                                        <div className="ticket-window-card ticket-window-notes-card">
-                                            <div className="ticket-window-card-header">
-                                                <h3>Notatki wewnętrzne</h3>
-                                            </div>
-                                            {internalNotes.length === 0 ? (
-                                                <p className="ticket-window-empty">Brak notatek.</p>
-                                            ) : (
-                                                <ul className="ticket-window-notes-list">
-                                                    {internalNotes.map(note => (
-                                                        <li key={note.id}>
-                                                            <strong>{new Date(note.createdAt).toLocaleString("pl-PL")}</strong>
-                                                            <span>{note.message}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </div>
-                                    )}
                                 </div>
                             </div>
                         </div>

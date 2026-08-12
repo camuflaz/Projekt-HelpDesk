@@ -10,6 +10,8 @@
 
 .ticket-form-card h2{
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .ticket-form-card form{

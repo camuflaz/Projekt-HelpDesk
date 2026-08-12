@@ -23,7 +23,7 @@
     height: 85vh;
     border-radius: 12px;
     background-color: #fff;
-    padding: 25px;
+    padding: 20px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     min-height: 0;
     overflow: auto;
@@ -95,6 +95,15 @@
     overflow: auto;
 }
 
+.dashboard-box-upper::-webkit-scrollbar {
+    width: 7px;
+}
+
+.dashboard-box-upper::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #556c91;
+}
+
 .dashboard-box-lower{
     flex: 1;
 
@@ -107,4 +116,13 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     min-height: 0;
     overflow: auto;
+}
+
+.dashboard-box-lower::-webkit-scrollbar {
+    width: 7px;
+}
+
+.dashboard-box-lower::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: #556c91;
 }

@@ -88,12 +88,26 @@
     justify-content: center;
 }
 
+.assigned-button:hover{
+    background-color: rgba(137, 43, 226, 0.603);
+    color: white;
+}
+
+
 .status-action-button.resolve{
+    color: black;
+}
+
+.status-action-button.resolve:hover{
     background: #4caf50;
     color: white;
 }
 
 .status-action-button.close{
+    color: black;
+}
+
+.status-action-button.close:hover{
     background: #f44336;
     color: white;
 }
@@ -110,9 +124,6 @@
     transform: translateY(-2px);
 }
 
-.assigned-button:hover{
-    background-color: rgba(137, 43, 226, 0.603);
-}
 
 .status{
     padding: 3px 8px;
@@ -120,6 +131,8 @@
     border-radius: 15px;
 
     color: white;
+
+    font-weight: 500;
 }
 
 .status.new{
