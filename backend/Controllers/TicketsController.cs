@@ -181,6 +181,17 @@ public class TicketsController : ControllerBase
         return Ok();
     }
 
+    [Authorize(Roles = "admin")]
+    [HttpPost("{id}/internal-comments")]
+    public async Task<IActionResult> AddInternalComment(int id, AddInternalCommentDto dto)
+    {
+        int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+
+        await _ticketService.AddInternalCommentAsync(id, userId, dto);
+
+        return Ok();
+    }
+
     [Authorize]
     [HttpGet("all-tickets")]
     public async Task<IActionResult> GetTickets([FromQuery] TicketQueryDto query)

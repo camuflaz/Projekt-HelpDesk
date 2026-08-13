@@ -15,4 +15,6 @@ public class User
 
     public ICollection<TicketComment> Comments { get; set;} = new List<TicketComment>();
 
+    public ICollection<TicketInternalComment> InternalComments { get; set; } = new List<TicketInternalComment>();
+
 }

@@ -41,5 +41,22 @@ CREATE TABLE "TicketComments" (
         REFERENCES "Users" ("Id") ON DELETE CASCADE
 );
 
+CREATE TABLE "TicketInternalComments" (
+    "Id" SERIAL PRIMARY KEY,
+    "Message" TEXT NOT NULL,
+    "CreatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT (CURRENT_TIMESTAMP AT TIME ZONE 'UTC'),
+    "TicketId" INT NOT NULL,
+    "UserId" INT NOT NULL,
+
+    CONSTRAINT "FK_TicketInternalComments_Tickets_TicketId" FOREIGN KEY ("TicketId") 
+        REFERENCES "Tickets" ("Id") ON DELETE CASCADE,
+        
+    CONSTRAINT "FK_TicketInternalComments_Users_UserId" FOREIGN KEY ("UserId") 
+        REFERENCES "Users" ("Id") ON DELETE CASCADE
+);
+
+
 CREATE INDEX "IX_TicketComments_TicketId" ON "TicketComments" ("TicketId");
 CREATE INDEX "IX_TicketComments_UserId" ON "TicketComments" ("UserId");
+CREATE INDEX "IX_TicketInternalComments_TicketId" ON "TicketInternalComments" ("TicketId");
+CREATE INDEX "IX_TicketInternalComments_UserId" ON "TicketInternalComments" ("UserId");

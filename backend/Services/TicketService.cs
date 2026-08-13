@@ -290,6 +290,8 @@ public class TicketService : ITicketService
             ticket = await _context.Tickets
                 .Include(t => t.Comments)
                 .ThenInclude(c => c.User)
+                .Include(t => t.InternalComments)
+                .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(t =>
                     t.Id == ticketId &&
                     (t.AssignedAdminId == null || t.AssignedAdminId == userId));
@@ -298,6 +300,8 @@ public class TicketService : ITicketService
         {
             ticket = await _context.Tickets
                 .Include(t => t.Comments)
+                .ThenInclude(c => c.User)
+                .Include(t => t.InternalComments)
                 .ThenInclude(c => c.User)
                 .FirstOrDefaultAsync(t =>
                     t.Id == ticketId &&
@@ -333,6 +337,18 @@ public class TicketService : ITicketService
                     Author = c.User.Username,
                     Role = c.User.Role
                 })
+                .ToList(),
+            InternalComments = ticket.InternalComments
+                .OrderBy(c => c.CreatedAt)
+                .Select(c => new TicketInternalCommentDto
+                {
+                    Id = c.Id,
+                    Message = c.Message,
+                    CreatedAt = c.CreatedAt,
+                    UserId = c.UserId,
+                    Author = c.User.Username,
+                    Role = c.User.Role
+                })
                 .ToList()
         };
     }
@@ -355,6 +371,24 @@ public class TicketService : ITicketService
         await _context.SaveChangesAsync();
     }
 
+
+    public async Task AddInternalCommentAsync(
+        int ticketId,
+        int userId,
+        AddInternalCommentDto dto)
+    {
+        var comment = new TicketInternalComment
+        {
+            TicketId = ticketId,
+            UserId = userId,
+            Message = dto.Message,
+            CreatedAt = DateTime.UtcNow
+        };
+        _context.TicketInternalComments.Add(comment);
+
+        await _context.SaveChangesAsync();
+    }
+    
 
     public async Task<TicketPageResultDto> GetTicketsAsync(TicketQueryDto query, int userId, string role)
     {
@@ -430,6 +464,8 @@ public class TicketService : ITicketService
             TotalPages = (int)Math.Ceiling(total / (double)query.PageSize)
         };
     }
+
+
 
 
     

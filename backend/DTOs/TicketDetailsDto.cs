@@ -24,4 +24,6 @@ public class TicketDetailsDto
     public int CurrentUserId { get; set; }
 
     public List<TicketCommentDto> Comments { get; set; } = new();
+
+    public List<TicketInternalCommentDto> InternalComments { get; set; } = new();
 }

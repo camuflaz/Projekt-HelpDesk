@@ -14,7 +14,6 @@ function TicketWindow({ ticketId, onClose }) {
     const [statusUpdating, setStatusUpdating] = useState(false);
     const [message, setMessage] = useState("");
     const [internalMessage, setInternalMessage] = useState("");
-    const [internalNotes, setInternalNotes] = useState([]);
     const [activeTab, setActiveTab] = useState("chat");
     const chatRef = useRef(null);
 
@@ -146,22 +145,26 @@ function TicketWindow({ ticketId, onClose }) {
         }
     }
 
-    function handleSaveInternalNote(e) {
+    async function handleSaveInternalNote(e) {
         e.preventDefault();
 
-        if (!internalMessage.trim()) {
+        if (!internalMessage.trim() || !ticket) {
             return;
         }
 
-        setInternalNotes(prev => [
-            {
-                id: Date.now(),
-                message: internalMessage.trim(),
-                createdAt: new Date().toISOString()
+        const response = await fetch(`${API_URL}/tickets/${ticket.id}/internal-comments`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
             },
-            ...prev
-        ]);
-        setInternalMessage("");
+            body: JSON.stringify({ message: internalMessage.trim() })
+        });
+
+        if (response.ok) {
+            setInternalMessage("");
+            await loadTicket();
+        }
     }
 
     if (ticketId == null) {
@@ -394,10 +397,15 @@ function TicketWindow({ ticketId, onClose }) {
                                                     <p className="ticket-window-empty">Brak wiadomości w tej rozmowie.</p>
                                                 )
                                             ) : (
-                                                internalNotes.length ? (
-                                                    internalNotes.map(note => (
+                                                ticket?.internalComments?.length ? (
+                                                    ticket.internalComments.map(note => (
                                                         <div key={note.id} className="ticket-window-internal-note">
-                                                            <strong>{new Date(note.createdAt).toLocaleString("pl-PL")}</strong>
+                                                            <strong>
+                                                                {note.author || "Admin"} (ID: {note.userId})
+                                                            </strong>
+                                                            <div className="ticket-window-internal-meta">
+                                                                {new Date(note.createdAt).toLocaleString("pl-PL")}
+                                                            </div>
                                                             <p>{note.message}</p>
                                                         </div>
                                                     ))

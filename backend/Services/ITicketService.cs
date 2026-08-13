@@ -46,4 +46,10 @@ public interface ITicketService
         int userId,
         AddCommentDto dto
     );
+
+    Task AddInternalCommentAsync(
+        int ticketId,
+        int userId,
+        AddInternalCommentDto dto
+    );
 }

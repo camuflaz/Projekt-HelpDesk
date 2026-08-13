@@ -14,6 +14,8 @@ public class AppDbContext : DbContext
 
     public DbSet<TicketComment> TicketComments { get; set; }
 
+    public DbSet<TicketInternalComment> TicketInternalComments { get; set; }
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -40,6 +42,16 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<TicketComment>()
             .HasOne(c => c.User)
             .WithMany(u => u.Comments)
+            .HasForeignKey(c => c.UserId);
+    
+        modelBuilder.Entity<TicketInternalComment>()
+            .HasOne(c => c.Ticket)
+            .WithMany(t => t.InternalComments)
+            .HasForeignKey(c => c.TicketId);
+
+        modelBuilder.Entity<TicketInternalComment>()
+            .HasOne(c => c.User)
+            .WithMany(u => u.InternalComments)
             .HasForeignKey(c => c.UserId);
 
     }

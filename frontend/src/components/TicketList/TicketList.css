@@ -14,6 +14,12 @@
     top: 0;
 }
 
+.ticket-list-title p {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
 .ticket-card{
     background: white;
 
