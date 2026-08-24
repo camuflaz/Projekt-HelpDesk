@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "jnPb+e1YeiI=",
+  "dgSpecHash": "MxQc5RI21uQ=",
   "success": true,
   "projectFilePath": "/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend/backend.csproj",
   "expectedPackageFiles": [
@@ -50,7 +50,7 @@
     "/home/phi/.nuget/packages/system.security.cryptography.protecteddata/9.0.0/system.security.cryptography.protecteddata.9.0.0.nupkg.sha512",
     "/home/phi/.nuget/packages/system.security.permissions/9.0.0/system.security.permissions.9.0.0.nupkg.sha512",
     "/home/phi/.nuget/packages/system.windows.extensions/9.0.0/system.windows.extensions.9.0.0.nupkg.sha512",
-    "/home/phi/.nuget/packages/microsoft.netcore.app.host.linux-x64/10.0.10/microsoft.netcore.app.host.linux-x64.10.0.10.nupkg.sha512"
+    "/home/phi/.nuget/packages/microsoft.netcore.app.host.linux-x64/10.0.11/microsoft.netcore.app.host.linux-x64.10.0.11.nupkg.sha512"
   ],
   "logs": []
 }

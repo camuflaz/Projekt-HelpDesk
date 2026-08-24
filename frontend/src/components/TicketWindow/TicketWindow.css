@@ -11,14 +11,17 @@
     left: calc(50vw - min(1280px, calc(100vw - 32px)) / 2);
     bottom: 5vh;
     width: min(1280px, calc(100vw - 32px));
+
     max-height: calc(100vh - 36px);
     height: 90vh;
     overflow: hidden;
     background: #125569;
+
     color: #f7fbff;
     border-radius: 24px;
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
     z-index: 1001;
+
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -27,6 +30,7 @@
 .ticket-window-header {
     display: flex;
     justify-content: space-between;
+
     align-items: flex-start;
     padding: 22px 28px;
     border-bottom: 1px solid #a1a1a1bd;
@@ -48,30 +52,32 @@
 .ticket-window-status-pill {
     padding: 6px 10px;
     border-radius: 999px;
+
     font-size: 12px;
     font-weight: 700;
+
     text-transform: uppercase;
     letter-spacing: 0.04em;
 }
 
 .ticket-window-status-pill.new {
-    background: #2196f3d9;
-    color: #d1ecff;
+    background: #27cafb5c;
+    color: #5ed8fd;
 }
 
 .ticket-window-status-pill.in-progress {
-    background: rgba(255, 182, 57, 0.18);
+    background: rgba(255, 182, 57, 0.425);
     color: #fcc359;
 }
 
 .ticket-window-status-pill.resolved {
-    background: rgba(16, 185, 129, 0.18);
+    background: rgba(16, 185, 129, 0.349);
     color: #4fe28c;
 }
 
 .ticket-window-status-pill.closed {
-    background: rgba(244, 67, 54, 0.18);
-    color: #f56957;
+    background: #e9473c96;
+    color: #fdd1cb;
 }
 
 .ticket-window-subtitle {
@@ -90,14 +96,17 @@
     border: none;
     width: 42px;
     height: 42px;
+
     border-radius: 12px;
     display: grid;
     place-items: center;
     cursor: pointer;
-    font-size: 20px;
+
+    font-size: 25px;
     color: #fff;
     background: rgba(255, 255, 255, 0.12);
-    transition: transform 0.2s ease, background 0.2s ease;
+
+    transition: background 0.2s ease;
 }
 
 .ticket-window-action-btn:hover {
@@ -112,16 +121,21 @@
     color: #5efa8d;
 }
 
-.ticket-window-action-btn.close:hover,
+.ticket-window-action-btn.close:hover{
+    color: #ef4444;
+}
+
 .ticket-window-action-btn.close-main:hover {
-    color: #f16f6f;
+    color: #fc8585;
 }
 
 .ticket-window-content {
     display: flex;
     flex-direction: column;
+
     gap: 16px;
     padding: 20px 28px 28px;
+
     min-height: 0;
     overflow: hidden;
 }
@@ -217,15 +231,15 @@
 }
 
 .timeline-dot.current.in-progress {
-    box-shadow: 0 0 10px rgba(243, 156, 18, 0.35);
+    box-shadow: 0 0 10px rgba(243, 157, 18, 0.473);
 }
 
 .timeline-dot.current.resolved {
-    box-shadow: 0 0 10px rgba(46, 204, 113, 0.35);
+    box-shadow: 0 0 10px rgba(46, 204, 112, 0.493);
 }
 
 .timeline-dot.current.closed {
-    box-shadow: 0 0 10px rgba(231, 76, 60, 0.35);
+    box-shadow: 0 0 10px rgba(231, 77, 60, 0.5);
 }
 
 .timeline-line{
@@ -234,6 +248,7 @@
     left: 55%;
     width: 90%;
     height: 3px;
+
     z-index: 1;
 }
 
@@ -296,8 +311,10 @@
     margin: 0;
     color: #ffffffe6;
     line-height: 1.6;
+
     overflow-y: auto;
     overflow-x: hidden;
+
     padding-right: 6px;
     min-height: 0;
     max-height: 235px;
@@ -323,6 +340,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     gap: 8px;
     margin-bottom: 14px;
 }
@@ -367,8 +385,10 @@
     list-style: none;
     padding: 0;
     margin: 0;
+
     display: flex;
     flex-direction: column;
+
     gap: 8px;
     overflow-y: auto;
     padding-right: 4px;
@@ -377,9 +397,11 @@
 .ticket-window-notes-list li {
     display: flex;
     flex-direction: column;
+
     gap: 4px;
     padding: 10px 12px;
     border-radius: 12px;
+
     background: rgba(255, 255, 255, 0.07);
 }
 
@@ -396,8 +418,10 @@
 .ticket-window-tabs button {
     border: none;
     border-radius: 999px;
+
     padding: 7px 10px;
     background: rgba(255, 255, 255, 0.1);
+
     color: #fff;
     cursor: pointer;
     font-size: 12px;
@@ -415,8 +439,10 @@
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+
     display: flex;
     flex-direction: column;
+
     gap: 10px;
     padding-right: 5px;
 }
@@ -445,6 +471,7 @@
 .ticket-window-internal-note strong {
     display: block;
     margin-bottom: 6px;
+
     color: #7ce3d6;
     font-size: 12px;
 }
@@ -452,6 +479,7 @@
 .ticket-window-composer {
     display: flex;
     gap: 10px;
+
     margin-top: 12px;
     align-items: center;
 }
@@ -461,8 +489,10 @@
     resize: none;
     border: none;
     border-radius: 12px;
+
     padding: 12px 13px;
     min-height: 82px;
+
     background: #556c91;
     color: #fff;
     font-family: inherit;
@@ -480,11 +510,13 @@
     color: #fff;
     cursor: pointer;
     background: #556c91;
+
     border: none;
-    border-radius: 12px;
-    padding-top: 5px;
-    width: 42px;
-    height: 42px;
+    border-radius: 10px;
+    padding-top: 6px;
+    
+    width: 35px;
+    height: 41px;
     font-size: 22px;
     transition: .25s ease-in-out;
 }

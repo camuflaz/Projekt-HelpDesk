@@ -41,10 +41,10 @@ public interface ITicketService
         string status
     );
 
-    Task AddCommentAsync(
+    Task<bool> AddCommentAsync(
         int ticketId,
         int userId,
-        AddCommentDto dto
+        AddCommentDto dto        
     );
 
     Task AddInternalCommentAsync(

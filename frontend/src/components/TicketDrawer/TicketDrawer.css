@@ -1,7 +1,7 @@
 .drawer-overlay{
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,.45);
+    background: rgba(8, 24, 36, 0.62);
     backdrop-filter: blur(0.5px);
     z-index: 999;
 }
@@ -47,7 +47,7 @@
 
 .drawer-header-buttons{
     display: flex;
-    gap: 20px;
+    gap: 10px;
 }
 
 .drawer-header h2{
@@ -57,34 +57,34 @@
 
     font-weight: 600;
 
-    color: white;;
+    color: white;
 }
 
 .drawer-header button{
-    margin-top: 5px;
-    border: none;
-
-    background: none;
-
-    color: white;
-
     cursor: pointer;
-
-    font-size: 25px;
-
-    transition: .2s;
+    color: #fff;
+    background: #ffffff1f;
+    border: none;
+    border-radius: 12px;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+    transition: background .2s;
+    display: grid;
 }
 
-.button-pin-me{
-    transition: .2s;
+.drawer-header button:hover{
+    background: rgba(255, 255, 255, 0.22);
 }
+
 
 .button-pin-me:hover{
     color: rgb(217, 65, 255);
 }
 
 .button-close:hover{
-    color: #2498f7;
+    color: #fc8585;
 }
 
 .button-status-resolved:hover{

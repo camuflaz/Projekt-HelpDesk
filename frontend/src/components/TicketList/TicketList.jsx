@@ -72,7 +72,7 @@ function TicketList({title, endpoint, onSelect}) {
         <div className="ticket-list">
             <h2 className="ticket-list-title">{title}</h2>
             {
-                tickets.length === 0 ? <p>Brak zgłoszeń w tej kategorii</p>
+                tickets.length === 0 ? <p className="ticket-list-empty">Brak zgłoszeń w tej kategorii</p>
                 :
                 tickets.map(ticket => (
                     <TicketCard

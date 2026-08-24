@@ -249,8 +249,9 @@ function TicketWindow({ ticketId, onClose }) {
                                     <motion.button
                                         type="button"
                                         className="ticket-window-action-btn pin"
-                                        whileHover={{ y: -2, scale: 1.04 }}
-                                        whileTap={{ scale: 0.97 }}
+                                        whileHover={{ y: -4}}
+                                        whileTap={{ scale: 0.75 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             const confirmed = window.confirm("Czy na pewno chcesz przypiąć zgłoszenie do siebie?");
@@ -265,9 +266,12 @@ function TicketWindow({ ticketId, onClose }) {
 
                                 {isAdmin && ticket && ticket.status === "in-progress" && (
                                     <>
-                                        <button
+                                        <motion.button
                                             type="button"
                                             className="ticket-window-action-btn resolve"
+                                            whileHover={{ y: -4}}
+                                            whileTap={{ scale: 0.75 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Rozwiązane?");
@@ -278,11 +282,14 @@ function TicketWindow({ ticketId, onClose }) {
                                             disabled={statusUpdating}
                                         >
                                             <CgCheckR />
-                                        </button>
+                                        </motion.button>
 
-                                        <button
+                                        <motion.button
                                             type="button"
                                             className="ticket-window-action-btn close"
+                                            whileHover={{ y: -4}}
+                                            whileTap={{ scale: 0.75 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Zamknięte?");
@@ -293,13 +300,16 @@ function TicketWindow({ ticketId, onClose }) {
                                             disabled={statusUpdating}
                                         >
                                             <CgCloseR />
-                                        </button>
+                                        </motion.button>
                                     </>
                                 )}
 
-                                <button type="button" className="ticket-window-action-btn close-main" onClick={onClose}>
+                                <motion.button type="button" className="ticket-window-action-btn close-main" 
+                                whileHover={{ y: -4 }} 
+                                transition={{ type: "spring", stiffness: 200, damping: 15 }} 
+                                onClick={onClose}>
                                     <CgClose />
-                                </button>
+                                </motion.button>
                             </div>
                         </div>
 
@@ -418,7 +428,7 @@ function TicketWindow({ ticketId, onClose }) {
                                         <form className="ticket-window-composer" onSubmit={activeTab === "chat" ? handleSendPublicMessage : handleSaveInternalNote}>
                                             <textarea
                                                 rows="3"
-                                                placeholder={activeTab === "chat" ? "Napisz wiadomość do użytkownika..." : "Dodaj notatkę dla zespołu..."}
+                                                placeholder={activeTab === "chat" ? "Napisz wiadomość..." : "Dodaj notatkę dla zespołu..."}
                                                 value={activeTab === "chat" ? message : internalMessage}
                                                 onChange={(e) => activeTab === "chat" ? setMessage(e.target.value) : setInternalMessage(e.target.value)}
                                             />

@@ -273,25 +273,36 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                             )}
                         {isActiveView && ticket && ticket.status === "in-progress" && (
                             <>
-                                <button className="button-status-resolved" type="button" onClick={(e) => {
+                                <motion.button className="button-status-resolved" type="button" 
+                                whileHover={{ y: -4, scale: 1.08 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                onClick={(e) => {
                                     e.stopPropagation();
                                     const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Rozwiązane?");
                                     if (confirmed) {
                                         updateTicketStatus("resolved");
                                     }
-                                }} disabled={statusUpdating}> <CgCheckR /> </button>
+                                }} disabled={statusUpdating}> <CgCheckR /> </motion.button>
 
-                                <button className="button-status-closed" type="button" onClick={(e) => {
+                                <motion.button className="button-status-closed" type="button" 
+                                whileHover={{ y: -4, scale: 1.08 }}
+                                whileTap={{ scale: 0.95 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                onClick={(e) => {
                                     e.stopPropagation();
                                     const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Zamknięte?");
                                     if (confirmed) {
                                         updateTicketStatus("closed");
                                     }
-                                }} disabled={statusUpdating}> <CgCloseR /> </button>
+                                }} disabled={statusUpdating}> <CgCloseR /> </motion.button>
                             </>
                         )}
                         <motion.button
                             className="button-close"
+                            whileHover={{ y: -4, scale: 1.08 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
                             onClick={onClose}
                         >
                             <CgClose />

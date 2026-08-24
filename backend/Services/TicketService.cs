@@ -292,9 +292,7 @@ public class TicketService : ITicketService
                 .ThenInclude(c => c.User)
                 .Include(t => t.InternalComments)
                 .ThenInclude(c => c.User)
-                .FirstOrDefaultAsync(t =>
-                    t.Id == ticketId &&
-                    (t.AssignedAdminId == null || t.AssignedAdminId == userId));
+                .FirstOrDefaultAsync(t => t.Id == ticketId);
         }
         else
         {
@@ -338,7 +336,8 @@ public class TicketService : ITicketService
                     Role = c.User.Role
                 })
                 .ToList(),
-            InternalComments = ticket.InternalComments
+            InternalComments = role == "admin"
+                ? ticket.InternalComments
                 .OrderBy(c => c.CreatedAt)
                 .Select(c => new TicketInternalCommentDto
                 {
@@ -350,15 +349,26 @@ public class TicketService : ITicketService
                     Role = c.User.Role
                 })
                 .ToList()
+                : new List<TicketInternalCommentDto>()
         };
     }
 
-    public async Task AddCommentAsync(
+    public async Task<bool> AddCommentAsync(
         int ticketId,
         int userId,
         AddCommentDto dto)
     {
-        var comment  = new TicketComment
+        var ticket = await _context.Tickets
+            .FirstOrDefaultAsync(t =>
+                t.Id == ticketId &&
+                (t.AuthorId == userId || t.AssignedAdminId == userId));
+
+        if (ticket == null)
+        {
+            return false;
+        }
+
+        var comment = new TicketComment
         {
             TicketId = ticketId,
             UserId = userId,
@@ -369,6 +379,7 @@ public class TicketService : ITicketService
         _context.TicketComments.Add(comment);
 
         await _context.SaveChangesAsync();
+        return true;
     }
 
 

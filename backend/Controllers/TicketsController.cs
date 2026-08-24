@@ -176,9 +176,9 @@ public class TicketsController : ControllerBase
     {
         int userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
 
-        await _ticketService.AddCommentAsync(id, userId, dto);
+        var success = await _ticketService.AddCommentAsync(id, userId, dto);
 
-        return Ok();
+        return success ? Ok() : Forbid();
     }
 
     [Authorize(Roles = "admin")]
