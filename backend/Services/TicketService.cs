@@ -323,6 +323,7 @@ public class TicketService : ITicketService
             Tags = ticket.Tags,
             CreatedAt = ticket.CreatedAt,
             UpdatedAt = ticket.UpdatedAt,
+            ClosedAt = ticket.ClosedAt,
             CurrentUserId = userId,
             Comments = ticket.Comments
                 .OrderBy(c => c.CreatedAt)

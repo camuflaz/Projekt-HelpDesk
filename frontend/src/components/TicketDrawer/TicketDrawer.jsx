@@ -157,11 +157,17 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                         >
                     <div className="drawer-header">
                         <h2>Szczegóły zgłoszenia</h2>
-                        <button onClick={onClose}> <CgClose /> </button>
+                        <motion.button className="button-close"
+                        whileHover={{ y: -4, scale: 1.08 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                        onClick={onClose}> 
+                        <CgClose /> 
+                        </motion.button>
                     </div>
                     {
                         loading ?
-                        <p>Ładowanie...</p>
+                        <p className="drawer-loading">Ładowanie...</p>
                         :
                         ticket &&
                         <>
@@ -311,7 +317,7 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                     </div>
                     {
                         loading ?
-                        <p>Ładowanie...</p>
+                        <p className="drawer-loading">Ładowanie...</p>
                         :
                         ticket &&
                         <>

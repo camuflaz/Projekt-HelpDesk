@@ -20,6 +20,7 @@ public class TicketDetailsDto
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
+    public DateTime? ClosedAt { get; set; }
 
     public int CurrentUserId { get; set; }
 

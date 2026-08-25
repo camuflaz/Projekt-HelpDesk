@@ -32,6 +32,10 @@
     border-radius: 12px;
 }
 
+.drawer-loading{
+    padding: 15px;
+}
+
 
 .drawer-header{
     display: flex;

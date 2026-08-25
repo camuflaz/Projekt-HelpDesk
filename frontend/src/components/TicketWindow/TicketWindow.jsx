@@ -209,7 +209,18 @@ function TicketWindow({ ticketId, onClose }) {
             minute: "2-digit"
         });
     };
-    const lastUpdateText = formatTicketDate(ticket?.updatedAt);
+
+
+    const lastUpdateText = ticket?.closedAt
+        ? formatTicketDate(ticket.closedAt)
+        : formatTicketDate(ticket?.updatedAt);
+
+    const timelineStatusLabel =
+        currentStatus === "closed"
+            ? "Zamknięto"
+            : currentStatus === "resolved"
+                ? "Rozwiązano"
+                : "Zaktualizowano";
 
     return (
         <AnimatePresence>
@@ -317,7 +328,7 @@ function TicketWindow({ ticketId, onClose }) {
                             <div className="ticket-window-timeline-card full-width">
                                 <div className="ticket-window-timeline-header">
                                     <h3>Przebieg zgłoszenia</h3>
-                                    <span> • Zaktualizowano {lastUpdateText} </span>
+                                    <span> • {timelineStatusLabel} {lastUpdateText} </span>
                                 </div>
                                 <div className="ticket-window-timeline">
                                     {timelineSteps.map((step, index) => {
