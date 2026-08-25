@@ -3,12 +3,16 @@ import { useAuth } from "../../context/AuthContext";
 import API_URL from "../../services/api";
 import { CgNotes, CgCheckO, CgAlarm, CgAdd, CgCloseO } from "react-icons/cg";
 import "./TicketAdminStatistics.css";
-import { secondsToMilliseconds } from "framer-motion";
+import {
+    getCachedStatistics,
+    hasFreshStatisticsCache,
+    setCachedStatistics,
+    subscribeToTicketRefresh
+} from "../../services/ticketRefresh";
 
 function TicketAdminStatistics() {
     const { user } = useAuth();
-    const [ loading, setLoading ] = useState(false);
-    const [stats, setStats] = useState({
+    const [stats, setStats] = useState(() => getCachedStatistics() ?? {
         activeTickets: 0,
         newTicketsAvailable: 0,
         ResolvedTickets: 0,
@@ -21,8 +25,11 @@ function TicketAdminStatistics() {
             return;
         }
 
-        async function loadStats() {
-            setLoading(true);
+        async function loadStats(forceRefresh = false) {
+            if (!forceRefresh && hasFreshStatisticsCache()) {
+                return;
+            }
+
             try {
                 const response = await fetch(`${API_URL}/tickets/admin-statistics`, {
                     credentials: "include"
@@ -30,42 +37,48 @@ function TicketAdminStatistics() {
 
                 if(response.ok){    
                     const data = await response.json();
+                    setCachedStatistics(data);
                     setStats(data);
                 }
 
             }
-            
-            finally{
-                setLoading(false);
+            catch (error) {
+                console.error(error);
             }
         }
 
         loadStats();
+
+        const unsubscribe = subscribeToTicketRefresh(() => {
+            loadStats(true);
+        });
+
+        return unsubscribe;
     }, [user]);
 
     const statCards = [
         {
             key: "activeTickets",
             label: "Aktywne zgłoszenia",
-            value: stats.activeTickets,
+            value: stats.activeTickets || 0,
             icon: <CgNotes className="stat-icon" />
         },
         {
             key: "newTicketsAvailable",
             label: "Nowe zgłoszenia",
-            value: stats.newTicketsAvailable,
+            value: stats.newTicketsAvailable || 0,
             icon: <CgAdd className="stat-icon" />
         },
         {
             key: "ResolvedTickets",
             label: "Rozwiązane zgłoszenia",
-            value: stats.resolvedTickets,
+            value: stats.resolvedTickets || 0,
             icon: <CgCheckO className="stat-icon" />
         },
         {
             key: "ClosedTickets",
             label: "Zamknięte zgłoszenia",
-            value: stats.closedTickets,
+            value: stats.closedTickets || 0,
             icon: <CgCloseO className="stat-icon" />
         },
         {

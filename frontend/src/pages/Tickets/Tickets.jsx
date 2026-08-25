@@ -1,34 +1,49 @@
 import { useState, useEffect } from "react";
 import "./Tickets.css";
-import { useAuth } from "../../context/AuthContext";
 import Pagination from "../../components/Pagination/Pagination";
 import TicketFilters from "../../components/TicketsFilters/TicketFilters";
 import API_URL from "../../services/api";
 import TicketCard from "../../components/TicketList/TicketCard";
 import TicketWindow from "../../components/TicketWIndow/TicketWindow";
-import { notifyTicketRefresh } from "../../services/ticketRefresh";
+import {
+    getCachedTicketPage,
+    hasFreshTicketPageCache,
+    notifyTicketRefresh,
+    setCachedTicketPage,
+    subscribeToTicketRefresh
+} from "../../services/ticketRefresh";
 
-function Tickets() {
-    const { user } = useAuth();
-    const [tickets, setTickets] = useState();
-    const [selectedTicket, setSelectedTicket] = useState();
-    const [loading, setLoading] = useState(true);
-    const [query, setQuery] = useState({
-        page: 1,
-        pageSize: 12,
-        search: "",
-        status: "",
-        priority: "",
-        category: "",
-        dateFrom: "",
-        dateTo: ""
+const initialQuery = {
+    page: 1,
+    pageSize: 12,
+    search: "",
+    status: "",
+    priority: "",
+    category: "",
+    dateFrom: "",
+    dateTo: ""
+};
+
+function getTicketCacheKey(query) {
+    const params = new URLSearchParams();
+
+    Object.entries(query).forEach(([key, value]) => {
+        if (value) {
+            params.append(key, value);
+        }
     });
 
-    const [totalPages, setTotalPages] = useState(1);
+    return `all-tickets?${params.toString()}`;
+}
 
-    useEffect(() => {
-        loadTickets();
-    }, [query]);
+function Tickets() {
+    const initialCachedPage = getCachedTicketPage(getTicketCacheKey(initialQuery));
+    const [tickets, setTickets] = useState(initialCachedPage?.items);
+    const [selectedTicket, setSelectedTicket] = useState();
+    const [loading, setLoading] = useState(!initialCachedPage);
+    const [query, setQuery] = useState(initialQuery);
+
+    const [totalPages, setTotalPages] = useState(initialCachedPage?.totalPages ?? 1);
 
     async function handleAssignTicket(ticketId, adminId) {
         const response = await fetch(`${API_URL}/tickets/${ticketId}/assign`, {
@@ -37,11 +52,17 @@ function Tickets() {
         });
 
         if (response.ok) {
-            setTickets(prevTickets => (prevTickets ?? []).map(ticket =>
-                ticket.id === ticketId
-                    ? { ...ticket, assignedAdminId: adminId, status: "in-progress" }
-                    : ticket
-            ));
+            setTickets(prevTickets => {
+                const nextTickets = (prevTickets ?? []).map(ticket =>
+                    ticket.id === ticketId
+                        ? { ...ticket, assignedAdminId: adminId, status: "in-progress" }
+                        : ticket
+                );
+                const cacheKey = getTicketCacheKey(query);
+                const cachedPage = getCachedTicketPage(cacheKey);
+                setCachedTicketPage(cacheKey, { ...cachedPage, items: nextTickets });
+                return nextTickets;
+            });
             notifyTicketRefresh();
         }
     }
@@ -57,17 +78,36 @@ function Tickets() {
         });
 
         if (response.ok) {
-            setTickets(prevTickets => (prevTickets ?? []).map(ticket =>
-                ticket.id === ticketId
-                    ? { ...ticket, status: nextStatus }
-                    : ticket
-            ));
+            setTickets(prevTickets => {
+                const nextTickets = (prevTickets ?? []).map(ticket =>
+                    ticket.id === ticketId
+                        ? { ...ticket, status: nextStatus }
+                        : ticket
+                );
+                const cacheKey = getTicketCacheKey(query);
+                const cachedPage = getCachedTicketPage(cacheKey);
+                setCachedTicketPage(cacheKey, { ...cachedPage, items: nextTickets });
+                return nextTickets;
+            });
             notifyTicketRefresh();
         }
     }
 
-    async function loadTickets() {
-        setLoading(true);
+    async function loadTickets(forceRefresh = false) {
+        const cacheKey = getTicketCacheKey(query);
+        const cachedPage = getCachedTicketPage(cacheKey);
+
+        if (cachedPage) {
+            setTickets(cachedPage.items);
+            setTotalPages(cachedPage.totalPages);
+            setLoading(false);
+        } else {
+            setLoading(true);
+        }
+
+        if (!forceRefresh && hasFreshTicketPageCache(cacheKey)) {
+            return;
+        }
 
         try{
             const params = new URLSearchParams();
@@ -105,6 +145,7 @@ function Tickets() {
 
             const data = await response.json();
 
+            setCachedTicketPage(cacheKey, data);
             setTickets(data.items);
             setTotalPages(data.totalPages);
     }
@@ -114,6 +155,16 @@ function Tickets() {
         }
 
     }
+
+    useEffect(() => {
+        loadTickets();
+
+        const unsubscribe = subscribeToTicketRefresh(() => {
+            loadTickets(true);
+        });
+
+        return unsubscribe;
+    }, [query]);
 
 
 

@@ -1,15 +1,40 @@
 import { useEffect, useState } from "react";
 import API_URL from "../../services/api";
-import { notifyTicketRefresh, subscribeToTicketRefresh } from "../../services/ticketRefresh";
+import {
+    getCachedTickets,
+    hasFreshTicketCache,
+    notifyTicketRefresh,
+    setCachedTickets,
+    subscribeToTicketRefresh
+} from "../../services/ticketRefresh";
 import TicketCard from "./TicketCard";
 
 function TicketList({title, endpoint, onSelect}) {
-    const [tickets, setTickets] = useState([]);
+    const [tickets, setTickets] = useState(() => getCachedTickets(endpoint) ?? []);
+
+    async function loadTickets(forceRefresh = false) {
+        if (!forceRefresh && hasFreshTicketCache(endpoint)) {
+            return;
+        }
+
+        const response = await fetch(`${API_URL}/tickets/${endpoint}`,
+            {
+                credentials: 'include'
+            }
+        );
+
+        if (response.ok){
+            const data = await response.json();
+            setCachedTickets(endpoint, data);
+            setTickets(data);
+        }
+    }
+
     useEffect(() => {
         loadTickets();
 
         const unsubscribe = subscribeToTicketRefresh(() => {
-            loadTickets();
+            loadTickets(true);
         });
 
         return unsubscribe;
@@ -22,13 +47,15 @@ function TicketList({title, endpoint, onSelect}) {
         });
 
         if (response.ok) {
-            setTickets(prevTickets =>
-                prevTickets.map(ticket =>
+            setTickets(prevTickets => {
+                const nextTickets = prevTickets.map(ticket =>
                     ticket.id === ticketId
                         ? { ...ticket, assignedAdminId: adminId, status: "in-progress" }
                         : ticket
-                )
-            );
+                );
+                setCachedTickets(endpoint, nextTickets);
+                return nextTickets;
+            });
             notifyTicketRefresh();
         }
     }
@@ -44,27 +71,16 @@ function TicketList({title, endpoint, onSelect}) {
         });
 
         if (response.ok) {
-            setTickets(prevTickets =>
-                prevTickets.map(ticket =>
+            setTickets(prevTickets => {
+                const nextTickets = prevTickets.map(ticket =>
                     ticket.id === ticketId
                         ? { ...ticket, status: nextStatus }
                         : ticket
-                )
-            );
+                );
+                setCachedTickets(endpoint, nextTickets);
+                return nextTickets;
+            });
             notifyTicketRefresh();
-        }
-    }
-
-    async function loadTickets() {
-        const response = await fetch(`${API_URL}/tickets/${endpoint}`,
-            {
-                credentials: 'include'
-            }
-        );
-
-        if (response.ok){
-            const data = await response.json();
-            setTickets(data);
         }
     }
 
