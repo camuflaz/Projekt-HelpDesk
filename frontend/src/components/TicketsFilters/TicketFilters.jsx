@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./TicketFilters.css";
-
+import { motion } from "framer-motion";
 function TicketFilters({ filters, onChange }) {
     const [showAdvanced, setShowAdvanced] = useState(false);
 
@@ -25,10 +25,11 @@ function TicketFilters({ filters, onChange }) {
                 </div>
 
                 <div className="ticket-filters-right">
-                    <div
+                    <motion.button
                         className="filter-toggle"
-                        role="button"
                         tabIndex={0}
+                        whileHover={{ duration: 0.2, backgroundColor: "#3a78ee" }}
+                        whileTap={{ scale: 0.90 }}
                         onClick={() => setShowAdvanced(!showAdvanced)}
                         onKeyDown={(e) => {
                             if (e.key === "Enter" || e.key === " ") {
@@ -38,11 +39,18 @@ function TicketFilters({ filters, onChange }) {
                         }}
                     >
                         Filtry
-                    </div>
+                    </motion.button>
                 </div>
             </div>
 
-            {showAdvanced && (
+            <motion.div
+                className={`ticket-filters-panel-wrapper ${showAdvanced ? "is-open" : "is-closed"}`}
+                initial={false}
+                animate={{ gridTemplateRows: showAdvanced ? "1fr" : "0fr" }}
+                transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+                aria-hidden={!showAdvanced}
+                inert={!showAdvanced ? "" : undefined}
+            >
                 <div className="ticket-filters-panel">
                     <label className="filter-field">
                         <span>Status</span>
@@ -95,7 +103,7 @@ function TicketFilters({ filters, onChange }) {
                         </div>
                     </label>
                 </div>
-            )}
+            </motion.div>
         </div>
     );
 }

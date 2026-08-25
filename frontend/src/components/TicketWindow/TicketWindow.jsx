@@ -261,7 +261,7 @@ function TicketWindow({ ticketId, onClose }) {
                                         type="button"
                                         className="ticket-window-action-btn pin"
                                         whileHover={{ y: -4}}
-                                        whileTap={{ scale: 0.75 }}
+                                        whileTap={{ scale: 0.90 }}
                                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -281,7 +281,7 @@ function TicketWindow({ ticketId, onClose }) {
                                             type="button"
                                             className="ticket-window-action-btn resolve"
                                             whileHover={{ y: -4}}
-                                            whileTap={{ scale: 0.75 }}
+                                            whileTap={{ scale: 0.90 }}
                                             transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -299,7 +299,7 @@ function TicketWindow({ ticketId, onClose }) {
                                             type="button"
                                             className="ticket-window-action-btn close"
                                             whileHover={{ y: -4}}
-                                            whileTap={{ scale: 0.75 }}
+                                            whileTap={{ scale: 0.90 }}
                                             transition={{ type: "spring", stiffness: 200, damping: 15 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -317,6 +317,7 @@ function TicketWindow({ ticketId, onClose }) {
 
                                 <motion.button type="button" className="ticket-window-action-btn close-main" 
                                 whileHover={{ y: -4 }} 
+                                whileTap={{ scale: 0.90 }} 
                                 transition={{ type: "spring", stiffness: 200, damping: 15 }} 
                                 onClick={onClose}>
                                     <CgClose />

@@ -24,6 +24,13 @@
     flex: 1;
 }
 
+.ticket-filters-left input {
+    padding: 13px 15px;
+    border-radius: 14px;
+    background: #f8fafc;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, .06);
+}
+
 .ticket-filters-right {
     display: flex;
     align-items: center;
@@ -33,7 +40,7 @@
 .ticket-filters input,
 .ticket-filters select {
     flex: 1;
-    padding: 12px 16px;
+    padding: 15px 16px;
     border: 1px solid #dcdcdc;
     border-radius: 10px;
     font-size: 15px;
@@ -69,22 +76,23 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: .2s;
 }
 
-.filter-toggle:hover {
-    background: #3a78ee;
+.ticket-filters-panel-wrapper {
+    display: grid;
+    overflow: hidden;
 }
 
-.filter-toggle:active {
-    transform: scale(.98);
+.ticket-filters-panel-wrapper.is-closed {
+    pointer-events: none;
 }
 
 .ticket-filters-panel {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 12px;
-    padding-top: 4px;
+    min-height: 0;
+    overflow: hidden;
 }
 
 .filter-field {
@@ -99,6 +107,57 @@
     font-weight: 600;
 }
 
+.filter-field select {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    appearance: none;
+    margin-top: 2px;
+    padding: 13px 15px 13px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    background-color: #f8fafc;
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 13px) 50%;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, .06);
+}
+
+@supports (appearance: base-select) {
+    .filter-field select,
+    .filter-field select::picker(select) {
+        appearance: base-select;
+    }
+
+    .filter-field select::picker(select) {
+        margin-top: 6px;
+        padding: 6px;
+        border: 1px solid #cbd5e1;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, .12);
+        overflow: hidden;
+    }
+}
+
+.filter-field select:hover {
+    background-color: #ffffff;
+}
+
+.filter-field select option {
+    padding: 14px 12px;
+    line-height: 1.4;
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 10px;
+}
+
+.filter-field select option:checked {
+    background: #e8f0ff;
+    color: #245dcc;
+    font-weight: 600;
+}
+
 .date-range {
     display: flex;
     align-items: center;
@@ -107,4 +166,14 @@
 
 .date-range input {
     min-width: 0;
+    margin-top: 2px;
+    padding: 15px 15px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    background: #f8fafc;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, .06);
+}
+
+.date-range input:hover {
+    background: #ffffff;
 }
