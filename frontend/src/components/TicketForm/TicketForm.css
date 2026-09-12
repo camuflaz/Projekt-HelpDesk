@@ -1,7 +1,13 @@
-.ticket-form.card{
+.ticket-form-card{
+    display: flex;
+    flex-direction: column;
+
     background: white;
 
     padding: 30px;
+
+    min-height: 100%;
+    box-sizing: border-box;
 
     border-radius: 12px;
 
@@ -14,16 +20,33 @@
     justify-content: center;
 }
 
+.ticket-form-card label{
+    font-weight: 600;
+    color: #4b5563;
+}
+
 .ticket-form-card form{
     display: flex;
-
     flex-direction: column;
-
+    flex: 1;
+    min-height: 0;
     gap: 18px;
 }
 
-.ticket-form-card input,
-.ticket-form-card select,
+.ticket-form-card input{
+    padding: 15px 16px;
+
+    border: 1px solid #dcdcdc;
+
+    border-radius: 10px;
+    background: #f8fafc;
+
+    box-shadow: 0 2px 5px rgba(15, 23, 42, .06);
+
+    font-size: 15px;
+    transition: .2s;
+}
+
 .ticket-form-card textarea{
     padding: 12px;
 
@@ -32,12 +55,89 @@
     border-radius: 8px;
 
     font-size: 15px;
+    transition: .2s;
+}
+
+.ticket-form-card input:focus,
+.ticket-form-card select:focus,
+.ticket-form-card textarea:focus{
+    outline: none;
+    border-color: #4f8cff;
+    box-shadow: 0 0 0 3px rgba(79, 140, 255, .18);
+}
+
+.ticket-form-card select {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    appearance: none;
+    padding: 15px 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background-color: #f8fafc;
+    background-position:
+        calc(100% - 18px) 50%,
+        calc(100% - 13px) 50%;
+    background-repeat: no-repeat;
+    background-size: 5px 5px, 5px 5px;
+    box-shadow: 0 2px 5px rgba(15, 23, 42, .06);
+    cursor: pointer;
+    font-weight: 500;
+    color: #4b5563;
+    font-size: 15px;
+}
+
+@supports (appearance: base-select) {
+    .ticket-form-card select,
+    .ticket-form-card select::picker(select) {
+        appearance: base-select;
+    }
+
+    .ticket-form-card select::picker(select) {
+        margin-bottom: 7px;
+        padding: 6px;
+        border: 1px solid #cbd5e1;
+        border-radius: 14px;
+        background: #ffffff;
+        box-shadow: 0 8px 20px rgba(15, 23, 42, .12);
+        overflow: hidden;
+        transition: none;
+    }
+}
+
+
+.ticket-form-card select:hover{
+    border-color: #4f8cff;
+}
+
+.ticket-form-card option {
+    padding: 14px 12px;
+    line-height: 1.4;
+    background: #ffffff;
+    color: #1f2937;
+    border-radius: 10px;
+    transition: none;
+    margin: 4px 0 4px 0;
+}
+
+.ticket-form-card select option:checked {
+    background: #e8f0ff;
+    color: #245dcc;
+    font-weight: 700;
+}
+
+.ticket-form-card select option:hover {
+    background: #e8f0ff;
+    color: #245dcc;
 }
 
 .ticket-form-card textarea{
     resize: vertical;
-
+    flex: 1;
     min-height: 100px;
+    min-width: 0;
+}
+
+.ticket-form-card button{
+    flex-shrink: 0;
 }
 
 .ticket-form-card button{

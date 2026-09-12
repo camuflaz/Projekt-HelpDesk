@@ -262,7 +262,7 @@ function TicketWindow({ ticketId, onClose }) {
                                         className="ticket-window-action-btn pin"
                                         whileHover={{ y: -4}}
                                         whileTap={{ scale: 0.90 }}
-                                        transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                        transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             const confirmed = window.confirm("Czy na pewno chcesz przypiąć zgłoszenie do siebie?");
@@ -282,7 +282,7 @@ function TicketWindow({ ticketId, onClose }) {
                                             className="ticket-window-action-btn resolve"
                                             whileHover={{ y: -4}}
                                             whileTap={{ scale: 0.90 }}
-                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Rozwiązane?");
@@ -300,7 +300,7 @@ function TicketWindow({ ticketId, onClose }) {
                                             className="ticket-window-action-btn close"
                                             whileHover={{ y: -4}}
                                             whileTap={{ scale: 0.90 }}
-                                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                            transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Zamknięte?");
@@ -316,9 +316,9 @@ function TicketWindow({ ticketId, onClose }) {
                                 )}
 
                                 <motion.button type="button" className="ticket-window-action-btn close-main" 
-                                whileHover={{ y: -4 }} 
+                                whileHover={{ y: -4}} 
                                 whileTap={{ scale: 0.90 }} 
-                                transition={{ type: "spring", stiffness: 200, damping: 15 }} 
+                                transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }} 
                                 onClick={onClose}>
                                     <CgClose />
                                 </motion.button>

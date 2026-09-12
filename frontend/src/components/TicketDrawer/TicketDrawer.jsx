@@ -158,8 +158,8 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                     <div className="drawer-header">
                         <h2>Szczegóły zgłoszenia</h2>
                         <motion.button className="button-close"
-                        whileHover={{ y: -4, scale: 1.08 }}
-                        whileTap={{ scale: 0.95 }}
+                        whileHover={{ y: -4 }}
+                        whileTap={{ scale: 0.90 }}
                         transition={{ type: "spring", stiffness: 200, damping: 15 }}
                         onClick={onClose}> 
                         <CgClose /> 
@@ -263,9 +263,9 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                             {isActiveView && ticket && ticket.status === "new" && (
                             <motion.button
                                 className="button-pin-me"
-                                whileHover={{ y: -4, scale: 1.08 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                whileHover={{ y: -4}}
+                                whileTap={{ scale: 0.90 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     const confirmed = window.confirm("Czy na pewno chcesz przypiąć zgłoszenie do siebie?");
@@ -280,9 +280,9 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                         {isActiveView && ticket && ticket.status === "in-progress" && (
                             <>
                                 <motion.button className="button-status-resolved" type="button" 
-                                whileHover={{ y: -4, scale: 1.08 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                whileHover={{ y: -4 }}
+                                whileTap={{ scale: 0.90 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Rozwiązane?");
@@ -292,9 +292,9 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                                 }} disabled={statusUpdating}> <CgCheckR /> </motion.button>
 
                                 <motion.button className="button-status-closed" type="button" 
-                                whileHover={{ y: -4, scale: 1.08 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                                whileHover={{ y: -4 }}
+                                whileTap={{ scale: 0.90 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     const confirmed = window.confirm("Czy chcesz zmienić status zgłoszenia na Zamknięte?");
@@ -306,9 +306,9 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                         )}
                         <motion.button
                             className="button-close"
-                            whileHover={{ y: -4, scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                            whileHover={{ y: -4 }}
+                            whileTap={{ scale: 0.90 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 15, duration: 0.2 }}
                             onClick={onClose}
                         >
                             <CgClose />
