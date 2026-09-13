@@ -136,6 +136,7 @@
     gap: 16px;
     padding: 20px 28px 28px;
 
+    flex: 1;
     min-height: 0;
     overflow: hidden;
 }
@@ -144,6 +145,7 @@
     display: grid;
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
     gap: 16px;
+    flex: 1;
     min-height: 0;
 }
 
@@ -308,6 +310,7 @@
 }
 
 .ticket-window-summary-card.secondary p {
+    flex: 1;
     margin: 0;
     color: #ffffffe6;
     line-height: 1.6;
@@ -317,7 +320,6 @@
 
     padding-right: 6px;
     min-height: 0;
-    max-height: 235px;
 }
 
 .ticket-window-summary-card.secondary p::-webkit-scrollbar {
@@ -432,7 +434,8 @@
 }
 
 .ticket-window-chat-card {
-    height: 545px;
+    flex: 1;
+    height: auto;
 }
 
 .ticket-window-chat-messages {
@@ -518,6 +521,7 @@
     width: 35px;
     height: 41px;
     font-size: 22px;
+    transition: all .25s ease-in-out;
 
 }
 

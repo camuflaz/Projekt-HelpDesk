@@ -2,6 +2,7 @@ import "./TicketForm.css";
 import { useState } from "react";
 import API_URL from "../../services/api";
 import { notifyTicketRefresh } from "../../services/ticketRefresh";
+import { motion } from "framer-motion";
 
 function TicketForm() {
     const [title, setTitle] = useState("");
@@ -125,7 +126,9 @@ function TicketForm() {
                         maxLength={100}
                     />
 
-                    <button type="submit">Utwórz zgłoszenie</button>
+                    <motion.button type="submit" whileTap={{ scale: 0.98}}>
+                        Utwórz zgłoszenie
+                    </motion.button>
                 </form>
             </div>
         );
