@@ -83,7 +83,7 @@ function TicketForm() {
 
                     <label>Opis:</label>
                     <textarea
-                        rows="8"
+                        rows="5"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         required

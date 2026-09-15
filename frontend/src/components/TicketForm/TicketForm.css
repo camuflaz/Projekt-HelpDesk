@@ -4,7 +4,7 @@
 
     background: white;
 
-    padding: 30px;
+    padding: 25px 30px 30px 30px;
 
     min-height: 100%;
     box-sizing: border-box;
@@ -15,7 +15,7 @@
 }
 
 .ticket-form-card h2{
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: center;
 }
@@ -30,7 +30,7 @@
     flex-direction: column;
     flex: 1;
     min-height: 0;
-    gap: 18px;
+    gap: 14px;
 }
 
 .ticket-form-card input{
@@ -53,7 +53,7 @@
     border: 1px solid #ccc;
 
     border-radius: 8px;
-
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 15px;
     transition: .2s;
 }
@@ -141,7 +141,7 @@
 }
 
 .ticket-form-card button{
-    margin-top: 20px;
+    margin-top: 15px;
 
     padding: 14px;
 
