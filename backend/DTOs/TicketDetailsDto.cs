@@ -24,6 +24,10 @@ public class TicketDetailsDto
 
     public int CurrentUserId { get; set; }
 
+    public int? AuthorId { get; set; }
+
+    public string Author { get; set; } = string.Empty;
+
     public List<TicketCommentDto> Comments { get; set; } = new();
 
     public List<TicketInternalCommentDto> InternalComments { get; set; } = new();

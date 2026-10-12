@@ -178,6 +178,11 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                         <div className="drawer-grid">
 
                             <div>
+                                <label>Autor</label>
+                                <span>{ticket.authorId === null ? "Usunięty użytkownik" : ticket.author ?? "-"}</span>
+                            </div>
+
+                            <div>
                                 <label>Status</label>
                                 <span className={"drawer-"+ticket.status}>{statusTranslations[ticket.status]}</span>
                             </div>
@@ -326,6 +331,11 @@ function TicketDrawer({ ticketId, onClose, isActiveView = false }){
                         </div>
 
                         <div className="drawer-grid">
+
+                            <div>
+                                <label>Autor</label>
+                                <span>{ticket.authorId === null ? "Usunięty użytkownik" : ticket.author ?? "-"}</span>
+                            </div>
 
                             <div>
                                 <label>Status</label>

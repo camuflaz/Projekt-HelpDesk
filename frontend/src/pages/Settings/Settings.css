@@ -1,0 +1,184 @@
+.settings {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    min-height: 100%;
+    padding: 28px;
+    border-radius: 12px;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #0000001a;
+}
+
+.settings_header h1,
+.settings_section h2 {
+    margin: 0;
+    color: #182230;
+}
+
+.settings_header p,
+.settings_delete > p {
+    margin: 8px 0 0;
+    color: #667085;
+}
+
+.settings_cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.settings_card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    background: #fff;
+    color: #182230;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+    transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.settings_card.active {
+    border-color: #5271ff;
+    background: #f5f7ff;
+}
+
+.settings_card:not(.active):hover {
+    border-color: #d0d5dd;
+    background: #f9fafb;
+}
+
+.settings_card:focus-visible {
+    outline: 3px solid #5271ff40;
+    outline-offset: 2px;
+}
+
+.settings_card span {
+    font-weight: 600;
+}
+
+.settings_card small {
+    color: #667085;
+    font-size: 13px;
+}
+
+.settings_section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 22px;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    background: #fff;
+}
+
+.settings_section form {
+    display: grid;
+    grid-template-columns: minmax(150px, 220px) minmax(200px, 1fr);
+    align-items: center;
+    gap: 14px 18px;
+    max-width: 720px;
+}
+
+.settings_section label {
+    color: #344054;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.settings_section input {
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 12px;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    color: #182230;
+    font: inherit;
+    box-sizing: border-box;
+}
+
+.settings_section input:focus {
+    border-color: #5271ff;
+    outline: 3px solid #5271ff26;
+}
+
+.settings_section input[readonly] {
+    background: #f9fafb;
+    color: #667085;
+}
+
+.settings_section button {
+    grid-column: 2;
+    justify-self: start;
+    min-height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 6px;
+    background: #4f8cff;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.settings_section .danger_button {
+    background: #c62828;
+}
+
+.settings_notice {
+    padding: 12px 14px;
+    border-radius: 6px;
+}
+
+.settings_notice.success {
+    background: #ecfdf3;
+    color: #027a48;
+}
+
+.settings_notice.error {
+    background: #fef3f2;
+    color: #b42318;
+}
+
+@media (max-width: 640px) {
+    .settings {
+        padding: 18px;
+    }
+
+    .settings_section {
+        padding: 18px;
+    }
+
+    .settings_cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .settings_section form {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .settings_section form input + label {
+        margin-top: 8px;
+    }
+
+    .settings_section button {
+        grid-column: 1;
+        margin-top: 8px;
+    }
+}
+
+@media (max-width: 380px) {
+    .settings_cards {
+        grid-template-columns: 1fr;
+    }
+}

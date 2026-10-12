@@ -21,6 +21,7 @@ function Dashboard() {
             <div className="dashboard-left">
                 <TicketForm />
             </div>
+            
 
             <div className="dashboard-right">
                 <div className="dashboard-box-upper">

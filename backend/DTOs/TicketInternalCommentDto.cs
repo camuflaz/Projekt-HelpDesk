@@ -10,7 +10,7 @@ public class TicketInternalCommentDto
 
     public DateTime CreatedAt { get; set; }
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
     public string Author { get; set; } = string.Empty;
 

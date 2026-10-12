@@ -16,8 +16,12 @@ public class TicketComment
 
     public Ticket Ticket { get; set; } = null!;
 
-    public int UserId { get; set; }
+    public int? UserId { get; set; }
 
-    public User User { get; set; } = null!;
+    public User? User { get; set; }
+
+    public int? ArchivedUserId { get; set; }
+
+    public ArchivedUser? ArchivedUser { get; set; }
 
 }

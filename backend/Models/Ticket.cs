@@ -19,13 +19,21 @@ public class Ticket
 
     public DateTime? ClosedAt { get; set; }
 
-    public int AuthorId { get; set; }
+    public int? AuthorId { get; set; }
 
-    public User Author { get; set; } = null!;
+    public User? Author { get; set; }
+
+    public int? ArchivedUserId { get; set; }
+
+    public ArchivedUser? ArchivedAuthor { get; set; }
 
     public int? AssignedAdminId { get; set; }
 
     public User? AssignedAdmin { get; set; }
+
+    public int? ArchivedAssignedAdminId { get; set; }
+
+    public ArchivedUser? ArchivedAssignedAdmin { get; set; }
 
     public ICollection<TicketComment> Comments { get; set; } = new List<TicketComment>();
 

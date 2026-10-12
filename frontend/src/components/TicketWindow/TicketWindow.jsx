@@ -359,6 +359,10 @@ function TicketWindow({ ticketId, onClose }) {
                                         <h3>Najważniejsze informacje</h3>
                                         <div className="ticket-window-summary-list">
                                             <div>
+                                                <label>Autor</label>
+                                                <span>{ticket?.authorId === null ? "Usunięty użytkownik" : ticket?.author ?? "-"}</span>
+                                            </div>
+                                            <div>
                                                 <label>Tagi</label>
                                                 <span>{ticket?.tags ?? "-"}</span>
                                             </div>
@@ -423,7 +427,9 @@ function TicketWindow({ ticketId, onClose }) {
                                                     ticket.internalComments.map(note => (
                                                         <div key={note.id} className="ticket-window-internal-note">
                                                             <strong>
-                                                                {note.author || "Admin"} (ID: {note.userId})
+                                                                {note.userId === null
+                                                                    ? `Usunięty użytkownik (${note.author})`
+                                                                    : `${note.author || "Admin"} (ID: ${note.userId})`}
                                                             </strong>
                                                             <div className="ticket-window-internal-meta">
                                                                 {new Date(note.createdAt).toLocaleString("pl-PL")}

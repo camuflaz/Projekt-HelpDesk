@@ -288,19 +288,30 @@ public class TicketService : ITicketService
         if (role == "admin")
         {
             ticket = await _context.Tickets
+                .Include(t => t.Author)
+                .Include(t => t.ArchivedAuthor)
                 .Include(t => t.Comments)
                 .ThenInclude(c => c.User)
+                .Include(t => t.Comments)
+                .ThenInclude(c => c.ArchivedUser)
                 .Include(t => t.InternalComments)
                 .ThenInclude(c => c.User)
+                .Include(t => t.InternalComments)
+                .ThenInclude(c => c.ArchivedUser)
                 .FirstOrDefaultAsync(t => t.Id == ticketId);
         }
         else
         {
             ticket = await _context.Tickets
+                .Include(t => t.Author)
                 .Include(t => t.Comments)
                 .ThenInclude(c => c.User)
+                .Include(t => t.Comments)
+                .ThenInclude(c => c.ArchivedUser)
                 .Include(t => t.InternalComments)
                 .ThenInclude(c => c.User)
+                .Include(t => t.InternalComments)
+                .ThenInclude(c => c.ArchivedUser)
                 .FirstOrDefaultAsync(t =>
                     t.Id == ticketId &&
                     t.AuthorId == userId
@@ -325,6 +336,8 @@ public class TicketService : ITicketService
             UpdatedAt = ticket.UpdatedAt,
             ClosedAt = ticket.ClosedAt,
             CurrentUserId = userId,
+            AuthorId = ticket.AuthorId,
+            Author = ticket.Author?.Username ?? "Deleted user",
             Comments = ticket.Comments
                 .OrderBy(c => c.CreatedAt)
                 .Select(c => new TicketCommentDto
@@ -333,8 +346,8 @@ public class TicketService : ITicketService
                     Message = c.Message,
                     CreatedAt = c.CreatedAt,
                     UserId = c.UserId,
-                    Author = c.User.Username,
-                    Role = c.User.Role
+                    Author = c.User?.Username ?? c.ArchivedUser?.Username ?? "Deleted user",
+                    Role = c.User?.Role ?? c.ArchivedUser?.Role ?? string.Empty
                 })
                 .ToList(),
             InternalComments = role == "admin"
@@ -346,8 +359,8 @@ public class TicketService : ITicketService
                     Message = c.Message,
                     CreatedAt = c.CreatedAt,
                     UserId = c.UserId,
-                    Author = c.User.Username,
-                    Role = c.User.Role
+                    Author = c.User?.Username ?? c.ArchivedUser?.Username ?? "Deleted user",
+                    Role = c.User?.Role ?? c.ArchivedUser?.Role ?? string.Empty
                 })
                 .ToList()
                 : new List<TicketInternalCommentDto>()
