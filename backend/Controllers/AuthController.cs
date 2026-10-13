@@ -94,7 +94,7 @@ namespace backend.Controllers
 
             if (dto.Username == null && dto.Email == null && dto.NewPassword == null)
             {
-                return BadRequest(new { message = "Provide a username, email, or new password." });
+                return BadRequest(new { message = "Nie otrzymano żadnych danych, podaj nazwę użytkownika, mail oraz hasło." });
             }
 
             var user = await _context.Users.FindAsync(userId.Value);
@@ -105,7 +105,7 @@ namespace backend.Controllers
 
             if (!BCrypt.Net.BCrypt.Verify(dto.CurrentPassword, user.Password_hash))
             {
-                return BadRequest(new { message = "The current password is incorrect." });
+                return BadRequest(new { message = "Aktualne hasło jest niepoprawne." });
             }
 
             var newUsername = dto.Username?.Trim();
@@ -113,24 +113,24 @@ namespace backend.Controllers
 
             if (dto.Username != null && string.IsNullOrWhiteSpace(newUsername))
             {
-                return BadRequest(new { message = "Username cannot be empty." });
+                return BadRequest(new { message = "Nazwa użytkownika nie może być pusta." });
             }
 
             if (dto.Email != null && string.IsNullOrWhiteSpace(newEmail))
             {
-                return BadRequest(new { message = "Email cannot be empty." });
+                return BadRequest(new { message = "Email nie może być pusty." });
             }
 
             if (newUsername != null && await _context.Users.AnyAsync(u =>
                     u.Id != user.Id && u.Username == newUsername))
             {
-                return Conflict(new { message = "That username is already in use." });
+                return Conflict(new { message = "Ta nazwa użytkownika jest już wykorzystywana." });
             }
 
             if (newEmail != null && await _context.Users.AnyAsync(u =>
                     u.Id != user.Id && u.Email == newEmail))
             {
-                return Conflict(new { message = "That email is already in use." });
+                return Conflict(new { message = "Ten adres Email jest już wykorzystywany." });
             }
 
             if (newUsername != null)
@@ -158,7 +158,7 @@ namespace backend.Controllers
                     SqlState: PostgresErrorCodes.UniqueViolation
                 })
             {
-                return Conflict(new { message = "That username or email is already in use." });
+                return Conflict(new { message = "Ta nazwa użytwkonika lub Email są już wykorzystywane." });
             }
 
             SetAuthCookie(_jwtService.GenerateToken(user.Id, user.Username, user.Role));
@@ -183,7 +183,7 @@ namespace backend.Controllers
 
             if (!BCrypt.Net.BCrypt.Verify(dto.Password, user.Password_hash))
             {
-                return BadRequest(new { message = "The password is incorrect." });
+                return BadRequest(new { message = "Hasło nieprawidłowe." });
             }
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
@@ -228,7 +228,7 @@ namespace backend.Controllers
             await transaction.CommitAsync();
 
             Response.Cookies.Delete("access_token", new CookieOptions { Path = "/" });
-            return Ok(new { message = "Account deleted and archived." });
+            return Ok(new { message = "Konto zostało usunięte oraz zarchiwizowane." });
         }
 
         [HttpPost("logout")]

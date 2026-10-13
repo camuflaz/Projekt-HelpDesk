@@ -4543,19 +4543,19 @@
     ]
   },
   "packageFolders": {
-    "/home/phi/.nuget/packages/": {}
+    "/home/phiphi/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend/backend.csproj",
+      "projectUniqueName": "/mnt/c/Users/Karol2nd/Desktop/Projekt-HelpDesk/backend/backend.csproj",
       "projectName": "backend",
-      "projectPath": "/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend/backend.csproj",
-      "packagesPath": "/home/phi/.nuget/packages/",
-      "outputPath": "/mnt/c/Users/Karol/Desktop/Projekt HelpDesk/backend/obj/",
+      "projectPath": "/mnt/c/Users/Karol2nd/Desktop/Projekt-HelpDesk/backend/backend.csproj",
+      "packagesPath": "/home/phiphi/.nuget/packages/",
+      "outputPath": "/mnt/c/Users/Karol2nd/Desktop/Projekt-HelpDesk/backend/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/phi/.nuget/NuGet/NuGet.Config"
+        "/home/phiphi/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"

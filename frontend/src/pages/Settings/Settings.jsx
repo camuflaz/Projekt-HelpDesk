@@ -200,12 +200,12 @@ function Settings() {
             </div>}
 
             {activeSection === "email" && <div className="settings_section settings_email">
-                <h2>Zmiana email</h2>
+                <h2>Zmiana adresu email</h2>
                 <form onSubmit={handleEmailChange}>
-                    <label htmlFor="currentEmail">Aktualny email</label>
+                    <label htmlFor="currentEmail">Aktualny adres email</label>
                     <input type="email" id="currentEmail" value={email} readOnly />
 
-                    <label htmlFor="newEmail">Nowy email</label>
+                    <label htmlFor="newEmail">Nowy adres email</label>
                     <input
                         type="email"
                         id="newEmail"
